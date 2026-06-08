@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: syrian-christian-congress
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: scc-db
+          property: connectionString
+
+databases:
+  - name: scc-db
+    databaseName: scc_db
+    user: scc_user
+    plan: free

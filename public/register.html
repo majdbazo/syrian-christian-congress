@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register with the Syrian Christian Congress — Join our civic platform.">
+  <title>Register — Syrian Christian Congress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="container nav-container">
+    <a href="/" class="logo">
+      <img src="/images/image.png" alt="Syrian Christian Congress cross" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
+        <span class="logo-sub">الكونغرس المسيحي السوري</span>
+      </div>
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
+        <li><a href="/#about" class="nav-link" data-i18n="nav.about">About</a></li>
+        <li><a href="/events.html" class="nav-link" data-i18n="nav.events">Events</a></li>
+        <li><a href="/communities.html" class="nav-link" data-i18n="nav.communities">Communities</a></li>
+        <li><a href="/members.html" class="nav-link" data-i18n="nav.members">Our Members</a></li>
+        <li><a href="/register.html" class="nav-link nav-link-register active" data-i18n="nav.register">Register</a></li>
+        <li><a href="/contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">عربي</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Page hero ───────────────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="container">
+    <h1 data-i18n="register.page_title">Register</h1>
+    <p data-i18n="register.page_sub">Join the Syrian Christian Congress and become part of a growing civic movement.</p>
+  </div>
+</section>
+
+<!-- ── Form ────────────────────────────────────────────────────────────── -->
+<section class="section form-section">
+  <div class="container">
+
+    <div class="form-card animate-in">
+
+      <!-- Success state -->
+      <div class="success-box" id="registerSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 class="success-title">Registration Successful!</h2>
+        <p class="success-body">Thank you for registering with the Syrian Christian Congress. We will be in touch with you soon.</p>
+      </div>
+
+      <!-- Form -->
+      <form id="registerForm" novalidate>
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label class="form-label" for="first_name">
+              <span data-i18n="register.first_name">First Name</span>
+              <span class="req">*</span>
+            </label>
+            <input type="text" id="first_name" name="first_name" class="form-input"
+                   required autocomplete="given-name"
+                   data-i18n-ph="register.first_name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="last_name">
+              <span data-i18n="register.last_name">Last Name</span>
+              <span class="req">*</span>
+            </label>
+            <input type="text" id="last_name" name="last_name" class="form-input"
+                   required autocomplete="family-name"
+                   data-i18n-ph="register.last_name">
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label" for="email">
+              <span data-i18n="register.email">Email Address</span>
+              <span class="req">*</span>
+            </label>
+            <input type="email" id="email" name="email" class="form-input"
+                   required autocomplete="email"
+                   placeholder="you@example.com">
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label" for="address">
+              <span data-i18n="register.address">Address</span>
+            </label>
+            <input type="text" id="address" name="address" class="form-input"
+                   autocomplete="street-address"
+                   data-i18n-ph="register.address">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="country">
+              <span data-i18n="register.country">Country</span>
+            </label>
+            <select id="country" name="country" class="form-select">
+              <option value="">Select your country</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="state">
+              <span data-i18n="register.state">State / Province / Region</span>
+            </label>
+            <input type="text" id="state" name="state" class="form-input"
+                   data-i18n-ph="register.state">
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label" for="denomination">
+              <span data-i18n="register.denomination">Denomination</span>
+            </label>
+            <select id="denomination" name="denomination" class="form-select">
+              <option value="">Select your denomination</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label" for="about_yourself">
+              <span data-i18n="register.about">Tell Us About Yourself</span>
+            </label>
+            <textarea id="about_yourself" name="about_yourself" class="form-textarea"
+                      rows="5"
+                      data-i18n-ph="register.about_ph"></textarea>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <div id="formMessage" class="form-message" role="alert" style="display:none"></div>
+
+        <div class="form-submit mt-2">
+          <button type="submit" class="btn btn-navy btn-lg" data-i18n="register.submit">
+            Submit Registration
+          </button>
+        </div>
+      </form>
+
+    </div><!-- /form-card -->
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-text">
+            <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
+          </div>
+        </a>
+        <p class="footer-tagline" data-i18n="footer.tagline">An institutional civic platform for Syrian Christians in Syria and the diaspora.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.links">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/" class="footer-link" data-i18n="nav.home">Home</a></li>
+          <li><a href="/events.html" class="footer-link" data-i18n="nav.events">Events</a></li>
+          <li><a href="/register.html" class="footer-link" data-i18n="nav.register">Register</a></li>
+          <li><a href="/contact.html" class="footer-link" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.follow">Follow Us</h4>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn fb" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://x.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn x" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.cal_title">Event Calendar</h4>
+        <div class="cal-card">
+          <p data-i18n="footer.cal_body">Subscribe to stay updated with all our events.</p>
+          <button class="btn btn-gold btn-sm cal-subscribe-btn" data-i18n="footer.cal_btn">Subscribe to Calendar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p data-i18n="footer.rights">© 2026 Syrian Christian Congress. All rights reserved.</p>
+      <a href="/admin/" class="admin-footer-link">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/translations.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

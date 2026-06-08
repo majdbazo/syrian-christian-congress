@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Syrian Christian Congress — An institutional civic platform dedicated to organizing Syrian Christian presence and advancing equal citizenship in Syria.">
+  <title>Syrian Christian Congress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-container">
+    <a href="/" class="logo">
+      <img src="/images/image.png" alt="Syrian Christian Congress cross" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
+        <span class="logo-sub">الكونغرس المسيحي السوري</span>
+      </div>
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link active" data-i18n="nav.home">Home</a></li>
+        <li><a href="#about" class="nav-link" data-i18n="nav.about">About</a></li>
+        <li><a href="/events.html" class="nav-link" data-i18n="nav.events">Events</a></li>
+        <li><a href="/communities.html" class="nav-link" data-i18n="nav.communities">Communities</a></li>
+        <li><a href="/members.html" class="nav-link" data-i18n="nav.members">Our Members</a></li>
+        <li><a href="/register.html" class="nav-link nav-link-register" data-i18n="nav.register">Register</a></li>
+        <li><a href="/contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">عربي</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="/images/hero-bg.png" alt="" class="hero-bg-img">
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge" data-i18n="hero.badge">Official Civic Platform</div>
+    <h1 class="hero-title" data-i18n="hero.title">Syrian Christian Congress</h1>
+    <p class="hero-tagline" data-i18n="hero.tagline">
+      An institutional civic platform dedicated to organizing Syrian Christian presence,
+      strengthening national participation, and advancing equal citizenship and the rule of law
+      in a united, secure Syria for all its people.
+    </p>
+    <div class="hero-actions">
+      <a href="/register.html" class="btn btn-gold btn-lg" data-i18n="hero.btn_register">Register Now</a>
+      <a href="#about" class="btn btn-outline-white btn-lg" data-i18n="hero.btn_learn">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ── About ───────────────────────────────────────────────────────────── -->
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="section-header animate-in">
+      <h2 class="section-title" data-i18n="about.title">About the Syrian Christian Congress</h2>
+    </div>
+    <div class="about-grid">
+      <div class="animate-in">
+        <p class="about-body" data-i18n="about.body">
+          The Syrian Christian Congress is an institutional civic framework bringing together
+          Syrian Christians in Syria and across the diaspora to articulate a clear and responsible
+          national presence in Syrian public life. The Congress is grounded in the conviction that
+          Syrian Christians are an integral part of Syria's historical, social, and cultural fabric,
+          and partners in building a modern state based on equal citizenship, the rule of law, and
+          the protection of human dignity for all Syrians.
+        </p>
+        <div class="about-stats mt-3">
+          <div class="stat-card">
+            <span class="stat-val" data-i18n="about.stat1_val">Syria & Diaspora</span>
+            <span class="stat-lbl" data-i18n="about.stat1_lbl">Communities United</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" data-i18n="about.stat2_val">3</span>
+            <span class="stat-lbl" data-i18n="about.stat2_lbl">Languages</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" data-i18n="about.stat3_val">10+</span>
+            <span class="stat-lbl" data-i18n="about.stat3_lbl">Denominations</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-image-wrap animate-in">
+        <img src="/images/maaloula-city.jpg" alt="Syrian Christian Community"
+             onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1B3A6B,#2a5298)'; this.parentElement.style.borderRadius='28px'; this.parentElement.style.minHeight='300px'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Mission ─────────────────────────────────────────────────────────── -->
+<section class="section mission-section" id="mission">
+  <div class="container">
+    <div class="section-header animate-in">
+      <h2 class="section-title" data-i18n="mission.title">Our Mission &amp; Vision</h2>
+    </div>
+    <div class="mission-grid">
+
+      <div class="mission-card animate-in">
+        <div class="mission-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 data-i18n="mission.m1_title">An Authentic National Presence</h3>
+        <p data-i18n="mission.m1_body">We work to affirm Syrian Christian presence as an integral part of Syria's identity, and to affirm Syrian Christians as active partners in its political, social, and cultural future.</p>
+      </div>
+
+      <div class="mission-card animate-in">
+        <div class="mission-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3 data-i18n="mission.m2_title">Equal Citizenship and the Rule of Law</h3>
+        <p data-i18n="mission.m2_body">We advocate for a unified civil state based on equal citizenship, state neutrality toward religious affiliations, judicial independence, and the protection of fundamental rights and freedoms.</p>
+      </div>
+
+      <div class="mission-card animate-in">
+        <div class="mission-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3 data-i18n="mission.m3_title">Responsible Institutional Organization</h3>
+        <p data-i18n="mission.m3_body">We seek to transform the Syrian Christian presence in Syria and the diaspora into an organized, transparent, and representative force guided by a shared national responsibility.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Events preview ──────────────────────────────────────────────────── -->
+<section class="section events-section" id="events-preview">
+  <div class="container">
+    <div class="section-header animate-in">
+      <h2 class="section-title" data-i18n="events.preview_title">Upcoming Events</h2>
+      <a href="/events.html" class="btn btn-outline" data-i18n="events.view_all">View All Events</a>
+    </div>
+    <div class="events-grid" id="eventsPreview">
+      <div class="loader"><div class="spinner"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ─────────────────────────────────────────────────────────────── -->
+<section class="section cta-section">
+  <div class="container text-center">
+    <div class="cta-inner animate-in">
+      <h2 data-i18n="nav.register">Register</h2>
+      <p data-i18n="hero.tagline" style="display:none"></p>
+      <p style="color:rgba(255,255,255,.75);margin-bottom:2.5rem;font-size:1.05rem;">
+        Register today to become part of a growing civic movement working toward equal citizenship,
+        national dignity, and a secure future for all Syrians.
+      </p>
+      <a href="/register.html" class="btn btn-gold btn-lg" data-i18n="hero.btn_register">Register Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+
+     <div class="footer-brand">
+  <a href="/" class="logo footer-logo">
+    <img 
+      src="/images/image.png" 
+      alt="SCC" 
+      class="logo-img"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="logo-text">
+      <span class="logo-name" data-i18n="nav.logo">
+        Syrian Christian Congress
+      </span>
+    </div>
+  </a>
+
+  <p class="footer-tagline" data-i18n="footer.tagline">
+    An institutional civic platform for Syrian Christians in Syria and the diaspora.
+  </p>
+</div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.links">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/" class="footer-link" data-i18n="nav.home">Home</a></li>
+          <li><a href="#about" class="footer-link" data-i18n="nav.about">About</a></li>
+          <li><a href="/events.html" class="footer-link" data-i18n="nav.events">Events</a></li>
+          <li><a href="/register.html" class="footer-link" data-i18n="nav.register">Register</a></li>
+          <li><a href="/contact.html" class="footer-link" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.follow">Follow Us</h4>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn fb" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://x.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn x" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.cal_title">Event Calendar</h4>
+        <div class="cal-card">
+          <p data-i18n="footer.cal_body">Subscribe to stay updated with all our events.</p>
+          <button class="btn btn-gold btn-sm cal-subscribe-btn" data-i18n="footer.cal_btn">Subscribe to Calendar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p data-i18n="footer.rights">© 2026 Syrian Christian Congress. All rights reserved.</p>
+      <a href="/admin/" class="admin-footer-link">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/translations.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

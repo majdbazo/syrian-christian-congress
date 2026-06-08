@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Syrian Christian Congress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  /* ── Reset & tokens ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B3A6B; --navy-dark: #0e2444; --navy-light: #2a5298;
+    --gold: #C4922A; --gold-light: #e8b84b;
+    --white: #fff; --off: #f7f5f0; --gray-50: #f9fafb;
+    --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+    --gray-400: #9ca3af; --gray-500: #6b7280; --gray-700: #374151;
+    --text: #111827;
+    --danger: #dc2626; --danger-light: #fef2f2;
+    --success: #16a34a; --success-light: #f0fdf4;
+    --sidebar-w: 240px;
+    --header-h: 56px;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--text); }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font: inherit; border: none; background: none; }
+  input, textarea, select { font: inherit; }
+
+  /* ── Login screen ── */
+  #loginScreen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
+  }
+  .login-card {
+    background: var(--white); border-radius: 16px;
+    padding: 2.5rem 2rem; width: 100%; max-width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  }
+  .login-logo { text-align: center; margin-bottom: 1.75rem; }
+  .login-logo h2 { font-size: 1.2rem; color: var(--navy-dark); margin-top: .5rem; }
+  .login-logo p { font-size: .8rem; color: var(--gray-500); margin-top: .25rem; }
+  .login-shield { width: 52px; height: 52px; background: var(--navy); border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
+  .login-shield svg { width: 28px; height: 28px; stroke: var(--white); fill: none; stroke-width: 2; }
+  .lf-group { margin-bottom: 1rem; }
+  .lf-label { display: block; font-size: .8rem; font-weight: 600; color: var(--gray-700); margin-bottom: .35rem; }
+  .lf-input {
+    width: 100%; padding: .7rem .9rem; border: 1.5px solid var(--gray-200);
+    border-radius: 8px; font-size: .9rem; outline: none; transition: border-color .2s;
+  }
+  .lf-input:focus { border-color: var(--navy-light); box-shadow: 0 0 0 3px rgba(42,82,152,.1); }
+  .lf-btn {
+    width: 100%; padding: .8rem; background: var(--navy); color: var(--white);
+    border-radius: 8px; font-weight: 600; font-size: .95rem; margin-top: .5rem;
+    transition: background .2s;
+  }
+  .lf-btn:hover { background: var(--navy-dark); }
+  .lf-error { color: var(--danger); font-size: .82rem; margin-top: .5rem; min-height: 1.2rem; }
+
+  /* ── App shell ── */
+  #appShell { display: none; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w);
+    background: var(--navy-dark); display: flex; flex-direction: column;
+    z-index: 200; transition: transform .3s;
+  }
+  .sidebar-logo {
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .sidebar-logo span { font-size: .95rem; font-weight: 700; color: var(--white); display: block; }
+  .sidebar-logo small { font-size: .7rem; color: var(--gold-light); letter-spacing: .06em; text-transform: uppercase; }
+  .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+  .nav-item {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .75rem 1.5rem; color: rgba(255,255,255,.65);
+    font-size: .875rem; font-weight: 500; cursor: pointer;
+    transition: all .2s; border-left: 3px solid transparent;
+  }
+  .nav-item:hover { color: var(--white); background: rgba(255,255,255,.05); }
+  .nav-item.active { color: var(--white); background: rgba(255,255,255,.08); border-left-color: var(--gold); }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
+  .logout-btn {
+    display: flex; align-items: center; gap: .6rem; width: 100%;
+    padding: .65rem .75rem; border-radius: 8px;
+    color: rgba(255,255,255,.6); font-size: .85rem; font-weight: 500;
+    transition: all .2s;
+  }
+  .logout-btn:hover { background: rgba(220,38,38,.15); color: #fca5a5; }
+  .logout-btn svg { width: 16px; height: 16px; }
+  .sidebar-divider { font-size: .65rem; text-transform: uppercase; letter-spacing: .1em;
+    color: rgba(255,255,255,.3); padding: .75rem 1.5rem .25rem; font-weight: 600; }
+
+  /* Main */
+  .main-wrap { margin-left: var(--sidebar-w); display: flex; flex-direction: column; min-height: 100vh; }
+  .top-bar {
+    height: var(--header-h); background: var(--white); border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
+  }
+  .top-bar-title { font-size: 1rem; font-weight: 700; color: var(--navy-dark); }
+  .view-site-btn {
+    display: flex; align-items: center; gap: .4rem;
+    font-size: .8rem; font-weight: 600; color: var(--navy);
+    padding: .45rem .9rem; border: 1.5px solid var(--navy);
+    border-radius: 8px; transition: all .2s;
+  }
+  .view-site-btn:hover { background: var(--navy); color: var(--white); }
+
+  /* Content */
+  .page-content { flex: 1; padding: 1.75rem; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Stat cards */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card {
+    background: var(--white); border-radius: 12px; padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); display: flex; align-items: center; gap: 1rem;
+  }
+  .stat-icon {
+    width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stat-icon svg { width: 24px; height: 24px; }
+  .si-blue { background: #eff6ff; } .si-blue svg { stroke: #2563eb; }
+  .si-gold { background: #fffbeb; } .si-gold svg { stroke: #d97706; }
+  .si-green { background: #f0fdf4; } .si-green svg { stroke: #16a34a; }
+  .si-purple { background: #faf5ff; } .si-purple svg { stroke: #7c3aed; }
+  .stat-val { font-size: 1.75rem; font-weight: 800; color: var(--navy-dark); line-height: 1; }
+  .stat-lbl { font-size: .78rem; color: var(--gray-500); margin-top: .25rem; }
+
+  /* Section header */
+  .section-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .section-hdr h2 { font-size: 1rem; font-weight: 700; color: var(--navy-dark); }
+
+  /* Btn */
+  .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.1rem;
+    border-radius: 8px; font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:hover { background: var(--navy-dark); }
+  .btn-gold { background: var(--gold); color: var(--white); }
+  .btn-gold:hover { background: #b07d20; }
+  .btn-danger { background: var(--danger-light); color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: var(--white); }
+  .btn-sm { padding: .35rem .75rem; font-size: .78rem; }
+  .btn-ghost { background: transparent; color: var(--gray-500); border: 1.5px solid var(--gray-200); }
+  .btn-ghost:hover { background: var(--gray-100); }
+
+  /* Table */
+  .table-wrap { background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden; }
+  .table-toolbar { padding: .875rem 1.25rem; border-bottom: 1px solid var(--gray-100);
+    display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+  .search-input {
+    padding: .5rem .9rem; border: 1.5px solid var(--gray-200); border-radius: 8px;
+    font-size: .85rem; outline: none; width: 220px; transition: border-color .2s;
+  }
+  .search-input:focus { border-color: var(--navy-light); }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--gray-500); font-weight: 600; padding: .75rem 1.25rem;
+    text-align: left; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+  td { padding: .875rem 1.25rem; font-size: .875rem; color: var(--gray-700);
+    border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gray-50); }
+  .td-actions { display: flex; gap: .4rem; }
+  .empty-row td { text-align: center; color: var(--gray-400); padding: 3rem; font-style: italic; }
+  .badge {
+    display: inline-block; padding: .2rem .6rem; border-radius: 100px;
+    font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .badge-up { background: #dcfce7; color: #15803d; }
+  .badge-past { background: var(--gray-100); color: var(--gray-500); }
+
+  /* Modal */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 500;
+    align-items: center; justify-content: center; padding: 1rem;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 16px; width: 100%; max-width: 640px;
+    max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  .modal-header {
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: var(--white); z-index: 1;
+  }
+  .modal-header h3 { font-size: 1rem; font-weight: 700; }
+  .modal-close { font-size: 1.4rem; color: var(--gray-400); width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center; border-radius: 6px; }
+  .modal-close:hover { background: var(--gray-100); color: var(--text); }
+  .modal-body { padding: 1.5rem; }
+  .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--gray-200);
+    display: flex; gap: .75rem; justify-content: flex-end; }
+
+  /* Form elements (in modal) */
+  .fg { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+  .fg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .fg label { font-size: .8rem; font-weight: 600; color: var(--gray-700); }
+  .fg input, .fg textarea, .fg select {
+    padding: .65rem .875rem; border: 1.5px solid var(--gray-200); border-radius: 8px;
+    font-size: .875rem; outline: none; transition: border-color .2s; width: 100%;
+  }
+  .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--navy-light); }
+  .fg textarea { resize: vertical; min-height: 80px; }
+
+  /* Images grid */
+  .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+  .img-card {
+    background: var(--white); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07); transition: all .2s;
+  }
+  .img-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  .img-card-thumb { height: 120px; background: var(--gray-100); position: relative; overflow: hidden; }
+  .img-card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .img-card-body { padding: .625rem .75rem; }
+  .img-name { font-size: .72rem; color: var(--gray-700); font-weight: 500;
+    word-break: break-all; margin-bottom: .35rem; }
+  .img-size { font-size: .68rem; color: var(--gray-400); }
+  .img-actions { display: flex; gap: .4rem; margin-top: .5rem; }
+
+  /* Upload zone */
+  .upload-zone {
+    border: 2px dashed var(--gray-300); border-radius: 12px; padding: 2rem;
+    text-align: center; cursor: pointer; transition: all .2s; margin-bottom: 1.5rem;
+    background: var(--white);
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--navy); background: #f0f4ff; }
+  .upload-zone svg { width: 36px; height: 36px; stroke: var(--gray-300); margin-bottom: .5rem; }
+  .upload-zone p { font-size: .85rem; color: var(--gray-500); }
+  .upload-zone strong { color: var(--navy); }
+  #fileInput { display: none; }
+
+  /* Truncate */
+  .trunc { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    padding: .75rem 1.25rem; border-radius: 10px; font-size: .875rem; font-weight: 500;
+    color: var(--white); z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    transform: translateY(100px); opacity: 0; transition: all .3s;
+  }
+  .toast.show { transform: none; opacity: 1; }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--danger); }
+
+  /* Loading */
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200);
+    border-top-color: var(--navy); border-radius: 50%; animation: spin .7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-center { display: flex; justify-content: center; padding: 3rem; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: none; }
+    .main-wrap { margin-left: 0; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .fg-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } }
+
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: .5rem; }
+  @media (max-width: 768px) { .mobile-menu-btn { display: flex; align-items: center; } }
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 199;
+  }
+  .sidebar-overlay.open { display: block; }
+
+  /* Message expand */
+  .msg-body { white-space: pre-wrap; word-break: break-word; font-size: .875rem; line-height: 1.65;
+    color: var(--gray-700); max-height: 200px; overflow-y: auto; }
+
+  /* Settings */
+  .settings-card {
+    background: var(--white); border-radius: 14px; padding: 2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); max-width: 560px; margin-bottom: 1.5rem;
+  }
+  .settings-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 1.25rem;
+    padding-bottom: .75rem; border-bottom: 1px solid var(--gray-100); }
+  .sf-group { margin-bottom: 1rem; }
+  .sf-label { display: block; font-size: .8rem; font-weight: 600; color: var(--gray-700); margin-bottom: .35rem; }
+  .sf-hint { font-size: .72rem; color: var(--gray-400); margin-bottom: .35rem; }
+  .sf-input {
+    width: 100%; padding: .65rem .875rem; border: 1.5px solid var(--gray-200);
+    border-radius: 8px; font-size: .875rem; outline: none; transition: border-color .2s;
+  }
+  .sf-input:focus { border-color: var(--navy-light); box-shadow: 0 0 0 3px rgba(42,82,152,.08); }
+
+  /* Members chart */
+  .members-summary {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.75rem;
+  }
+  .members-stat {
+    background: var(--white); border-radius: 12px; padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); text-align: center;
+  }
+  .members-stat .val { font-size: 2rem; font-weight: 800; color: var(--navy-dark); }
+  .members-stat .lbl { font-size: .78rem; color: var(--gray-500); margin-top: .2rem; }
+  .chart-card {
+    background: var(--white); border-radius: 14px; padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .chart-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 1.25rem; }
+  .bar-row {
+    display: grid; grid-template-columns: 160px 1fr 48px;
+    align-items: center; gap: .75rem; margin-bottom: .625rem;
+  }
+  .bar-label { font-size: .82rem; color: var(--gray-700); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { background: var(--gray-100); border-radius: 100px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--navy), var(--navy-light)); transition: width .6s ease; }
+  .bar-count { font-size: .78rem; font-weight: 700; color: var(--navy-dark); text-align: right; }
+  .no-members { text-align: center; color: var(--gray-400); padding: 3rem; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══════════════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-shield">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h2>Admin Dashboard</h2>
+      <p>Syrian Christian Congress</p>
+    </div>
+    <form id="loginForm">
+      <div class="lf-group">
+        <label class="lf-label" for="lu">Username</label>
+        <input type="text" id="lu" class="lf-input" placeholder="admin" autocomplete="username" required>
+      </div>
+      <div class="lf-group">
+        <label class="lf-label" for="lp">Password</label>
+        <input type="password" id="lp" class="lf-input" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <div class="lf-error" id="loginError"></div>
+      <button type="submit" class="lf-btn" id="loginBtn">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
+<div id="appShell">
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span>SCC Admin</span>
+      <small>Syrian Christian Congress</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-divider">Main</div>
+      <div class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="sidebar-divider">Content</div>
+      <div class="nav-item" data-page="events">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Events
+      </div>
+      <div class="nav-item" data-page="images">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Images
+      </div>
+      <div class="sidebar-divider">People</div>
+      <div class="nav-item" data-page="registrations">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Registrations
+      </div>
+      <div class="nav-item" data-page="messages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Messages
+      </div>
+      <div class="sidebar-divider">Analytics</div>
+      <div class="nav-item" data-page="members">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-6"/></svg>
+        Members
+      </div>
+      <div class="sidebar-divider">Config</div>
+      <div class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 00-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/" target="_blank" class="nav-item" style="margin-bottom:.5rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Site
+      </a>
+      <button class="logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-wrap">
+    <header class="top-bar">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="top-bar-title" id="pageTitle">Dashboard</span>
+      </div>
+      <a href="/" target="_blank" class="view-site-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Site
+      </a>
+    </header>
+
+    <div class="page-content">
+
+      <!-- ── Dashboard ── -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-row" id="statsRow">
+          <div class="stat-card"><div class="stat-icon si-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="stat-val" id="s-reg">—</div><div class="stat-lbl">Registrations</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="stat-val" id="s-up">—</div><div class="stat-lbl">Upcoming Events</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div><div class="stat-val" id="s-msg">—</div><div class="stat-lbl">Messages</div></div></div>
+          <div class="stat-card"><div class="stat-icon si-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div><div class="stat-val" id="s-img">—</div><div class="stat-lbl">Images</div></div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+          <div>
+            <div class="section-hdr"><h2>Recent Registrations</h2></div>
+            <div class="table-wrap">
+              <table><thead><tr><th>Name</th><th>Country</th><th>Date</th></tr></thead>
+              <tbody id="dashRegTable"><tr class="empty-row"><td colspan="3">Loading…</td></tr></tbody></table>
+            </div>
+          </div>
+          <div>
+            <div class="section-hdr"><h2>Recent Messages</h2></div>
+            <div class="table-wrap">
+              <table><thead><tr><th>Name</th><th>Subject</th><th>Date</th></tr></thead>
+              <tbody id="dashMsgTable"><tr class="empty-row"><td colspan="3">Loading…</td></tr></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Events ── -->
+      <div class="page" id="page-events">
+        <div class="section-hdr">
+          <h2>Events Management</h2>
+          <button class="btn btn-primary" id="addEventBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Event
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr><th>Title</th><th>Date</th><th>Location</th><th>Type</th><th>Image</th><th>Actions</th></tr></thead>
+          <tbody id="eventsTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- ── Images ── -->
+      <div class="page" id="page-images">
+        <div class="section-hdr">
+          <h2>Image Library</h2>
+          <button class="btn btn-primary" id="uploadTrigger">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Upload Images
+          </button>
+        </div>
+        <div class="upload-zone" id="uploadZone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p><strong>Drag & drop images here</strong> or click to browse</p>
+          <p style="margin-top:.25rem;font-size:.78rem">JPEG, PNG, GIF, WebP, SVG — up to 10 MB each</p>
+          <input type="file" id="fileInput" multiple accept="image/*">
+        </div>
+        <div class="images-grid" id="imagesGrid"><div class="loading-center"><div class="spinner"></div></div></div>
+      </div>
+
+      <!-- ── Registrations ── -->
+      <div class="page" id="page-registrations">
+        <div class="section-hdr"><h2>Registrations</h2></div>
+        <div class="table-wrap">
+          <div class="table-toolbar">
+            <input type="text" class="search-input" id="regSearch" placeholder="Search name, email, country…">
+            <span id="regCount" style="font-size:.82rem;color:var(--gray-500)"></span>
+          </div>
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Denomination</th><th>Date</th><th></th></tr></thead>
+            <tbody id="regTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Messages ── -->
+      <div class="page" id="page-messages">
+        <div class="section-hdr"><h2>Contact Messages</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Date</th><th></th></tr></thead>
+            <tbody id="msgTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Members ── -->
+      <div class="page" id="page-members">
+        <div class="section-hdr"><h2>Member Statistics</h2></div>
+        <div class="members-summary">
+          <div class="members-stat"><div class="val" id="mem-total">—</div><div class="lbl">Total Members</div></div>
+          <div class="members-stat"><div class="val" id="mem-countries">—</div><div class="lbl">Countries</div></div>
+          <div class="members-stat"><div class="val" id="mem-top">—</div><div class="lbl">Top Country</div></div>
+        </div>
+        <div class="chart-card">
+          <h3>Members by Country</h3>
+          <div id="membersChart"><div class="loading-center"><div class="spinner"></div></div></div>
+        </div>
+      </div>
+
+      <!-- ── Settings ── -->
+      <div class="page" id="page-settings">
+        <div class="section-hdr"><h2>Site Settings</h2></div>
+
+        <div class="settings-card">
+          <h3>Contact &amp; Email</h3>
+          <div class="sf-group">
+            <label class="sf-label" for="set-email">Contact Email</label>
+            <div class="sf-hint">The email address that receives contact form submissions.</div>
+            <input type="email" id="set-email" class="sf-input" placeholder="info@example.com">
+          </div>
+          <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+        </div>
+
+        <div class="settings-card">
+          <h3>Social Media Links</h3>
+          <div class="sf-group">
+            <label class="sf-label" for="set-fb">Facebook URL</label>
+            <input type="url" id="set-fb" class="sf-input" placeholder="https://www.facebook.com/…">
+          </div>
+          <div class="sf-group">
+            <label class="sf-label" for="set-x">X (Twitter) URL</label>
+            <input type="url" id="set-x" class="sf-input" placeholder="https://x.com/…">
+          </div>
+          <button class="btn btn-primary" id="saveSocialBtn">Save Social Links</button>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-wrap -->
+</div><!-- /appShell -->
+
+<!-- Event Modal -->
+<div class="modal-backdrop" id="eventModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="eventModalTitle">Add Event</h3>
+      <button class="modal-close" id="closeEventModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="eventForm">
+        <input type="hidden" id="ef-id">
+        <div class="fg"><label>Title (English) *</label><input type="text" id="ef-title-en" required></div>
+        <div class="fg"><label>Title (Arabic)</label><input type="text" id="ef-title-ar" dir="rtl"></div>
+        <div class="fg"><label>Description (English)</label><textarea id="ef-desc-en" rows="3"></textarea></div>
+        <div class="fg"><label>Description (Arabic)</label><textarea id="ef-desc-ar" rows="2" dir="rtl"></textarea></div>
+        <div class="fg-grid">
+          <div class="fg"><label>Start Date & Time *</label><input type="datetime-local" id="ef-date" required></div>
+          <div class="fg"><label>End Date & Time</label><input type="datetime-local" id="ef-end-date"></div>
+        </div>
+        <div class="fg-grid">
+          <div class="fg"><label>Location</label><input type="text" id="ef-location" placeholder="City, Country"></div>
+          <div class="fg"><label>Type</label>
+            <select id="ef-type"><option value="upcoming">Upcoming</option><option value="past">Past</option></select>
+          </div>
+        </div>
+        <div class="fg"><label>Image filename</label>
+          <select id="ef-image"><option value="">— None —</option></select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelEventModal">Cancel</button>
+      <button class="btn btn-primary" id="saveEventBtn">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- Message Modal -->
+<div class="modal-backdrop" id="msgModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <h3 id="msgModalTitle">Message</h3>
+      <button class="modal-close" id="closeMsgModal">✕</button>
+    </div>
+    <div class="modal-body" id="msgModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelMsgModal">Close</button>
+      <button class="btn btn-danger" id="deleteMsgBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const api = (path, opts = {}) => fetch('/api/admin' + path, {
+  headers: { 'Content-Type': 'application/json' },
+  ...opts,
+  body: opts.body ? JSON.stringify(opts.body) : undefined,
+}).then(r => r.json());
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+async function checkAuth() {
+  const r = await fetch('/api/admin/check').then(r => r.json());
+  if (r.authenticated) showApp();
+  else showLogin();
+}
+
+function showLogin() {
+  $('loginScreen').style.display = 'flex';
+  $('appShell').style.display = 'none';
+}
+
+function showApp() {
+  $('loginScreen').style.display = 'none';
+  $('appShell').style.display = 'block';
+  loadDashboard();
+}
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = $('loginBtn'); btn.textContent = 'Signing in…'; btn.disabled = true;
+  $('loginError').textContent = '';
+  const r = await fetch('/api/admin/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: $('lu').value.trim(), password: $('lp').value }),
+  }).then(r => r.json());
+  if (r.success) { showApp(); }
+  else { $('loginError').textContent = r.error || 'Invalid credentials'; }
+  btn.textContent = 'Sign In'; btn.disabled = false;
+});
+
+$('logoutBtn').addEventListener('click', async () => {
+  await fetch('/api/admin/logout', { method: 'POST' });
+  showLogin();
+});
+
+// ── Navigation ────────────────────────────────────────────────────────────
+const pageTitles = { dashboard:'Dashboard', events:'Events', registrations:'Registrations', messages:'Messages', images:'Images', members:'Members', settings:'Settings' };
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = $('page-' + name);
+  if (page) page.classList.add('active');
+  const navEl = document.querySelector(`.nav-item[data-page="${name}"]`);
+  if (navEl) navEl.classList.add('active');
+  $('pageTitle').textContent = pageTitles[name] || name;
+  if (name === 'events') loadEvents();
+  if (name === 'registrations') loadRegistrations();
+  if (name === 'messages') loadMessages();
+  if (name === 'images') loadImages();
+  if (name === 'members') loadMembers();
+  if (name === 'settings') loadSettings();
+  // Close mobile sidebar
+  $('sidebar').classList.remove('open');
+  $('sidebarOverlay').classList.remove('open');
+}
+
+document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+  item.addEventListener('click', () => showPage(item.dataset.page));
+});
+
+// Mobile sidebar
+$('mobileMenuBtn').addEventListener('click', () => {
+  $('sidebar').classList.toggle('open');
+  $('sidebarOverlay').classList.toggle('open');
+});
+$('sidebarOverlay').addEventListener('click', () => {
+  $('sidebar').classList.remove('open');
+  $('sidebarOverlay').classList.remove('open');
+});
+
+// ── Dashboard ─────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  const [statsRes, regRes, msgRes] = await Promise.all([
+    api('/stats'), api('/registrations'), api('/messages'),
+  ]);
+  if (statsRes.success) {
+    const s = statsRes.stats;
+    $('s-reg').textContent = s.total_registrations;
+    $('s-up').textContent = s.upcoming_events;
+    $('s-msg').textContent = s.total_messages;
+    $('s-img').textContent = s.total_images;
+  }
+  if (regRes.success) {
+    const regs = regRes.registrations.slice(0, 5);
+    $('dashRegTable').innerHTML = regs.length ? regs.map(r => `
+      <tr><td>${r.first_name} ${r.last_name}</td><td>${r.country || '—'}</td><td>${fmtDate(r.created_at)}</td></tr>
+    `).join('') : '<tr class="empty-row"><td colspan="3">No registrations yet</td></tr>';
+  }
+  if (msgRes.success) {
+    const msgs = msgRes.messages.slice(0, 5);
+    $('dashMsgTable').innerHTML = msgs.length ? msgs.map(m => `
+      <tr><td>${esc(m.name)}</td><td class="trunc">${esc(m.subject||'—')}</td><td>${fmtDate(m.created_at)}</td></tr>
+    `).join('') : '<tr class="empty-row"><td colspan="3">No messages yet</td></tr>';
+  }
+}
+
+// ── Events ────────────────────────────────────────────────────────────────
+let allImages = [];
+async function loadEvents() {
+  const [evRes, imgRes] = await Promise.all([api('/events'), api('/images')]);
+  allImages = imgRes.success ? imgRes.images.map(i => i.name) : [];
+  populateImageSelect($('ef-image'), allImages);
+  if (!evRes.success) return;
+  $('eventsTable').innerHTML = evRes.events.length ? evRes.events.map(ev => `
+    <tr>
+      <td class="trunc" style="max-width:180px">${esc(ev.title_en)}</td>
+      <td>${fmtDate(ev.event_date)}</td>
+      <td class="trunc">${esc(ev.location||'—')}</td>
+      <td><span class="badge ${ev.event_type==='upcoming'?'badge-up':'badge-past'}">${ev.event_type}</span></td>
+      <td style="font-size:.78rem;color:var(--gray-400)">${ev.image_name||'—'}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-sm btn-ghost" onclick="openEditEvent(${ev.id})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteEvent(${ev.id})">Delete</button>
+      </div></td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="6">No events yet</td></tr>';
+}
+
+$('addEventBtn').addEventListener('click', () => openEventModal(null));
+$('closeEventModal').addEventListener('click', () => closeEventModal());
+$('cancelEventModal').addEventListener('click', () => closeEventModal());
+
+function openEventModal(ev) {
+  $('eventModalTitle').textContent = ev ? 'Edit Event' : 'Add Event';
+  $('ef-id').value = ev ? ev.id : '';
+  $('ef-title-en').value = ev?.title_en || '';
+  $('ef-title-ar').value = ev?.title_ar || '';
+  $('ef-desc-en').value = ev?.description_en || '';
+  $('ef-desc-ar').value = ev?.description_ar || '';
+  $('ef-date').value = ev?.event_date ? toLocalDatetime(ev.event_date) : '';
+  $('ef-end-date').value = ev?.end_date ? toLocalDatetime(ev.end_date) : '';
+  $('ef-location').value = ev?.location || '';
+  $('ef-type').value = ev?.event_type || 'upcoming';
+  $('ef-image').value = ev?.image_name || '';
+  $('eventModal').classList.add('open');
+}
+
+function closeEventModal() { $('eventModal').classList.remove('open'); }
+
+async function openEditEvent(id) {
+  const res = await api('/events');
+  const ev = res.events?.find(e => e.id === id);
+  if (ev) openEventModal(ev);
+}
+
+$('saveEventBtn').addEventListener('click', async () => {
+  const id = $('ef-id').value;
+  const data = {
+    title_en: $('ef-title-en').value.trim(),
+    title_ar: $('ef-title-ar').value.trim(),
+    description_en: $('ef-desc-en').value.trim(),
+    description_ar: $('ef-desc-ar').value.trim(),
+    event_date: $('ef-date').value,
+    end_date: $('ef-end-date').value || null,
+    location: $('ef-location').value.trim(),
+    event_type: $('ef-type').value,
+    image_name: $('ef-image').value || null,
+  };
+  if (!data.title_en || !data.event_date) return toast('Title and date are required', 'error');
+  const res = id
+    ? await api('/events/' + id, { method: 'PUT', body: data })
+    : await api('/events', { method: 'POST', body: data });
+  if (res.success) { closeEventModal(); loadEvents(); toast(id ? 'Event updated' : 'Event created'); }
+  else toast(res.error || 'Failed to save', 'error');
+});
+
+async function deleteEvent(id) {
+  if (!confirm('Delete this event?')) return;
+  const res = await api('/events/' + id, { method: 'DELETE' });
+  if (res.success) { loadEvents(); toast('Event deleted'); }
+  else toast('Failed to delete', 'error');
+}
+
+// ── Images ────────────────────────────────────────────────────────────────
+async function loadImages() {
+  const res = await api('/images');
+  if (!res.success) return;
+  allImages = res.images.map(i => i.name);
+  $('imagesGrid').innerHTML = res.images.length ? res.images.map(img => `
+    <div class="img-card">
+      <div class="img-card-thumb">
+        <img src="/images/${img.name}" alt="${img.name}" loading="lazy"
+             onerror="this.parentElement.style.background='#e5e7eb'">
+      </div>
+      <div class="img-card-body">
+        <div class="img-name">${img.name}</div>
+        <div class="img-size">${fmtSize(img.size)}</div>
+        <div class="img-actions">
+          <button class="btn btn-sm btn-danger" onclick="deleteImage('${img.name}')">Delete</button>
+        </div>
+      </div>
+    </div>`).join('') : '<p style="color:var(--gray-400);padding:2rem;grid-column:1/-1">No images yet</p>';
+}
+
+$('uploadTrigger').addEventListener('click', () => $('fileInput').click());
+$('uploadZone').addEventListener('click', e => { if (e.target !== $('fileInput')) $('fileInput').click(); });
+$('uploadZone').addEventListener('dragover', e => { e.preventDefault(); $('uploadZone').classList.add('drag'); });
+$('uploadZone').addEventListener('dragleave', () => $('uploadZone').classList.remove('drag'));
+$('uploadZone').addEventListener('drop', async e => {
+  e.preventDefault(); $('uploadZone').classList.remove('drag');
+  await uploadFiles(e.dataTransfer.files);
+});
+$('fileInput').addEventListener('change', async e => { await uploadFiles(e.target.files); e.target.value = ''; });
+
+async function uploadFiles(files) {
+  if (!files.length) return;
+  const fd = new FormData();
+  Array.from(files).forEach(f => fd.append('images', f));
+  const res = await fetch('/api/admin/images/upload', { method: 'POST', body: fd }).then(r => r.json());
+  if (res.success) { toast(`Uploaded ${res.uploaded.length} image(s)`); loadImages(); }
+  else toast('Upload failed', 'error');
+}
+
+async function deleteImage(name) {
+  if (!confirm(`Delete "${name}"?`)) return;
+  const res = await api('/images/' + encodeURIComponent(name), { method: 'DELETE' });
+  if (res.success) { loadImages(); toast('Image deleted'); }
+  else toast('Failed to delete', 'error');
+}
+
+// ── Registrations ─────────────────────────────────────────────────────────
+let allRegs = [];
+async function loadRegistrations() {
+  const res = await api('/registrations');
+  if (!res.success) return;
+  allRegs = res.registrations;
+  renderRegs(allRegs);
+}
+
+function renderRegs(regs) {
+  $('regCount').textContent = `${regs.length} registrant${regs.length !== 1 ? 's' : ''}`;
+  $('regTable').innerHTML = regs.length ? regs.map(r => `
+    <tr>
+      <td>${esc(r.first_name)} ${esc(r.last_name)}</td>
+      <td>${esc(r.email)}</td>
+      <td>${esc(r.country||'—')}</td>
+      <td class="trunc">${esc(r.denomination||'—')}</td>
+      <td>${fmtDate(r.created_at)}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteReg(${r.id})">Delete</button></td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="6">No registrations yet</td></tr>';
+}
+
+$('regSearch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  renderRegs(allRegs.filter(r =>
+    (r.first_name + ' ' + r.last_name + ' ' + r.email + ' ' + (r.country||'')).toLowerCase().includes(q)
+  ));
+});
+
+async function deleteReg(id) {
+  if (!confirm('Delete this registration?')) return;
+  const res = await api('/registrations/' + id, { method: 'DELETE' });
+  if (res.success) { loadRegistrations(); toast('Registration deleted'); }
+  else toast('Failed to delete', 'error');
+}
+
+// ── Messages ──────────────────────────────────────────────────────────────
+let currentMsgId = null;
+async function loadMessages() {
+  const res = await api('/messages');
+  if (!res.success) return;
+  $('msgTable').innerHTML = res.messages.length ? res.messages.map(m => `
+    <tr>
+      <td>${esc(m.name)}</td>
+      <td>${esc(m.email)}</td>
+      <td class="trunc">${esc(m.subject||'—')}</td>
+      <td>${fmtDate(m.created_at)}</td>
+      <td><button class="btn btn-sm btn-ghost" onclick="viewMsg(${m.id},'${esc(m.name)}','${esc(m.email)}','${esc(m.subject||'')}',\`${esc(m.message)}\`)">View</button></td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="5">No messages yet</td></tr>';
+}
+
+function viewMsg(id, name, email, subject, message) {
+  currentMsgId = id;
+  $('msgModalTitle').textContent = `Message from ${name}`;
+  $('msgModalBody').innerHTML = `
+    <p style="font-size:.8rem;color:var(--gray-400);margin-bottom:1rem">${email}${subject ? ' · ' + subject : ''}</p>
+    <div class="msg-body">${message}</div>`;
+  $('msgModal').classList.add('open');
+}
+$('closeMsgModal').addEventListener('click', () => $('msgModal').classList.remove('open'));
+$('cancelMsgModal').addEventListener('click', () => $('msgModal').classList.remove('open'));
+$('deleteMsgBtn').addEventListener('click', async () => {
+  if (!confirm('Delete this message?')) return;
+  const res = await api('/messages/' + currentMsgId, { method: 'DELETE' });
+  if (res.success) { $('msgModal').classList.remove('open'); loadMessages(); toast('Message deleted'); }
+  else toast('Failed to delete', 'error');
+});
+
+// ── Utilities ─────────────────────────────────────────────────────────────
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function fmtSize(b) {
+  if (b > 1048576) return (b/1048576).toFixed(1) + ' MB';
+  return (b/1024).toFixed(0) + ' KB';
+}
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function toLocalDatetime(d) {
+  const dt = new Date(d);
+  return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0')+'T'+
+    String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0');
+}
+function populateImageSelect(sel, images) {
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— None —</option>' + images.map(n => `<option value="${n}">${n}</option>`).join('');
+  if (cur) sel.value = cur;
+}
+function toast(msg, type = 'success') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Members ───────────────────────────────────────────────────────────────
+async function loadMembers() {
+  const res = await api('/members');
+  if (!res.success) return;
+  const { total, byCountry } = res;
+  $('mem-total').textContent = total;
+  $('mem-countries').textContent = byCountry.length;
+  $('mem-top').textContent = byCountry.length ? byCountry[0].country : '—';
+  if (!byCountry.length) {
+    $('membersChart').innerHTML = '<p class="no-members">No member data yet. Members will appear here once people register.</p>';
+    return;
+  }
+  const max = byCountry[0].count;
+  $('membersChart').innerHTML = byCountry.map(r => `
+    <div class="bar-row">
+      <div class="bar-label" title="${esc(r.country)}">${esc(r.country)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round((r.count/max)*100)}%"></div></div>
+      <div class="bar-count">${r.count}</div>
+    </div>`).join('');
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────
+async function loadSettings() {
+  const res = await api('/settings');
+  if (!res.success) return;
+  const s = res.settings;
+  $('set-email').value = s.contact_email || '';
+  $('set-fb').value = s.facebook_url || '';
+  $('set-x').value = s.x_url || '';
+}
+
+async function saveSettings(fields) {
+  const res = await api('/settings', { method: 'PUT', body: fields });
+  if (res.success) toast('Settings saved');
+  else toast(res.error || 'Failed to save', 'error');
+}
+
+$('saveSettingsBtn').addEventListener('click', () => {
+  saveSettings({ contact_email: $('set-email').value.trim() });
+});
+
+$('saveSocialBtn').addEventListener('click', () => {
+  saveSettings({ facebook_url: $('set-fb').value.trim(), x_url: $('set-x').value.trim() });
+});
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>
