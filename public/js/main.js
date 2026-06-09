@@ -473,3 +473,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+/* ── Newsletter ────────────────────────────────────────────────────────────── */
+document.querySelectorAll('.newsletter-form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = this.querySelector('input[type="email"]');
+    const btn = this.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = 'Subscribed!';
+    btn.disabled = true;
+    input.value = '';
+    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3000);
+  });
+});

@@ -867,6 +867,16 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--gray-500); line-heig
 .cal-card p { font-size: .82rem; color: rgba(255,255,255,.6); margin-bottom: .875rem; line-height: 1.55; }
 .cal-card .btn { width: 100%; justify-content: center; font-size: .85rem; }
 
+.newsletter-form { display: flex; flex-direction: column; gap: .5rem; }
+.newsletter-input {
+  width: 100%; padding: .5rem .75rem; font-size: .85rem;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--radius-sm); color: var(--white); outline: none;
+}
+.newsletter-input::placeholder { color: rgba(255,255,255,.4); }
+.newsletter-input:focus { border-color: var(--gold); }
+.newsletter-form .btn { width: 100%; justify-content: center; font-size: .85rem; }
+
 .footer-bottom {
   padding: 1.25rem 0;
   font-size: .8rem;
