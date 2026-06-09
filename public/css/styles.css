@@ -877,6 +877,9 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--gray-500); line-heig
 .newsletter-input:focus { border-color: var(--gold); }
 .newsletter-form .btn { width: 100%; justify-content: center; font-size: .85rem; }
 
+html[lang="en"] .denom-arabic { display: none; }
+html[lang="ar"] .en-only { display: none; }
+
 .footer-bottom {
   padding: 1.25rem 0;
   font-size: .8rem;
