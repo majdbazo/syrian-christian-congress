@@ -114,8 +114,9 @@
           <div class="form-group">
             <label class="form-label" for="country">
               <span data-i18n="register.country">Country</span>
+              <span class="req">*</span>
             </label>
-            <select id="country" name="country" class="form-select">
+            <select id="country" name="country" class="form-select" required>
               <option value="">Select your country</option>
             </select>
           </div>
@@ -123,8 +124,9 @@
           <div class="form-group">
             <label class="form-label" for="state">
               <span data-i18n="register.state">State / Province / Region</span>
+              <span class="req">*</span>
             </label>
-            <input type="text" id="state" name="state" class="form-input"
+            <input type="text" id="state" name="state" class="form-input" required
                    data-i18n-ph="register.state">
           </div>
 

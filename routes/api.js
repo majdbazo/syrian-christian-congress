@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../src/db');
+const { sendRegistrationNotification } = require('../src/mailer');
 
 const safe = (str) => (typeof str === 'string' ? str.trim().slice(0, 2000) : '');
 
@@ -22,19 +23,21 @@ router.get('/events', async (req, res) => {
 router.post('/register', async (req, res) => {
   const { first_name, last_name, email, address, country, state, denomination, about_yourself } = req.body;
 
-  if (!first_name || !last_name || !email)
+  if (!first_name || !last_name || !email || !country || !state)
     return res.status(400).json({ success: false, error: 'Required fields missing' });
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return res.status(400).json({ success: false, error: 'Invalid email address' });
 
   try {
-    await db.addRegistration({
+    const reg = {
       first_name: safe(first_name), last_name: safe(last_name),
       email: safe(email).toLowerCase(), address: safe(address),
       country: safe(country), state: safe(state),
       denomination: safe(denomination), about_yourself: safe(about_yourself),
-    });
+    };
+    await db.addRegistration(reg);
+    sendRegistrationNotification(reg).catch(err => console.error('Email notification failed:', err));
     res.json({ success: true, message: 'Registration successful' });
   } catch (err) {
     if (err.code === '23505')

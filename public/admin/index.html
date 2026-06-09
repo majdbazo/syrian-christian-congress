@@ -82,6 +82,11 @@
   .nav-item:hover { color: var(--white); background: rgba(255,255,255,.05); }
   .nav-item.active { color: var(--white); background: rgba(255,255,255,.08); border-left-color: var(--gold); }
   .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto; background: var(--gold); color: var(--navy-dark);
+    font-size: .68rem; font-weight: 700; border-radius: 999px;
+    padding: 1px 7px; min-width: 20px; text-align: center; display: none;
+  }
   .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,.08); }
   .logout-btn {
     display: flex; align-items: center; gap: .6rem; width: 100%;
@@ -380,6 +385,7 @@
       <div class="nav-item" data-page="registrations">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         Registrations
+        <span class="nav-badge" id="regBadge"></span>
       </div>
       <div class="nav-item" data-page="messages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -667,7 +673,7 @@ function showPage(name) {
   if (navEl) navEl.classList.add('active');
   $('pageTitle').textContent = pageTitles[name] || name;
   if (name === 'events') loadEvents();
-  if (name === 'registrations') loadRegistrations();
+  if (name === 'registrations') { loadRegistrations(); clearRegBadge(); }
   if (name === 'messages') loadMessages();
   if (name === 'images') loadImages();
   if (name === 'members') loadMembers();
@@ -702,6 +708,7 @@ async function loadDashboard() {
     $('s-up').textContent = s.upcoming_events;
     $('s-msg').textContent = s.total_messages;
     $('s-img').textContent = s.total_images;
+    updateRegBadge(s.total_registrations);
   }
   if (regRes.success) {
     const regs = regRes.registrations.slice(0, 5);
@@ -984,8 +991,35 @@ $('saveSocialBtn').addEventListener('click', () => {
   saveSettings({ facebook_url: $('set-fb').value.trim(), x_url: $('set-x').value.trim() });
 });
 
+// ── Registration badge ────────────────────────────────────────────────────
+function updateRegBadge(total) {
+  const seen = parseInt(localStorage.getItem('seenRegCount') || '0');
+  const newCount = Math.max(0, total - seen);
+  const badge = $('regBadge');
+  if (newCount > 0) {
+    badge.textContent = newCount > 99 ? '99+' : newCount;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function clearRegBadge() {
+  const total = parseInt($('s-reg').textContent) || 0;
+  localStorage.setItem('seenRegCount', total);
+  $('regBadge').style.display = 'none';
+}
+
+async function pollRegistrationCount() {
+  try {
+    const res = await api('/stats');
+    if (res.success) updateRegBadge(res.stats.total_registrations);
+  } catch (_) {}
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────
 checkAuth();
+setInterval(pollRegistrationCount, 60000);
 </script>
 </body>
 </html>
