@@ -638,6 +638,7 @@
 const $ = id => document.getElementById(id);
 const api = async (path, opts = {}) => {
   const r = await fetch('/api/admin' + path, {
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     ...opts,
     body: opts.body ? JSON.stringify(opts.body) : undefined,
@@ -898,16 +899,16 @@ $('regSearch').addEventListener('input', function() {
   ));
 });
 
-function deleteReg(id) {
-  confirmDelete('Delete this registration? This cannot be undone.', async () => {
-    try {
-      const res = await api('/registrations/' + id, { method: 'DELETE' });
-      if (res.success) { loadRegistrations(); toast('Registration deleted'); }
-      else toast(res.error || 'Failed to delete', 'error');
-    } catch (err) {
-      toast('Error: ' + err.message, 'error');
-    }
-  });
+async function deleteReg(id) {
+  if (!confirm('Delete this registration? This cannot be undone.')) return;
+  try {
+    const res = await api('/registrations/' + id, { method: 'DELETE' });
+    if (res.success) { loadRegistrations(); toast('Registration deleted'); }
+    else { toast(res.error || 'Failed to delete', 'error'); alert('Delete failed: ' + (res.error || 'unknown error')); }
+  } catch (err) {
+    toast('Error: ' + err.message, 'error');
+    alert('Delete error: ' + err.message);
+  }
 }
 
 // ── Messages ──────────────────────────────────────────────────────────────
