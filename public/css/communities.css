@@ -176,7 +176,7 @@
 .denom-arabic {
   font-size: .85rem; color: var(--gray-400);
   margin-bottom: .875rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Noto Sans Arabic', sans-serif;
   line-height: 1.5;
 }
 .denom-card-body p {
