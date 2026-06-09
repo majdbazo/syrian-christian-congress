@@ -893,7 +893,7 @@ function renderRegs(regs) {
       <td>${esc(r.state||'—')}</td>
       <td class="trunc">${esc(r.denomination||'—')}</td>
       <td>${fmtDate(r.created_at)}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteReg(${r.id})">Delete</button></td>
+      <td><button class="btn btn-sm btn-danger del-reg-btn" data-id="${r.id}">Delete</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="7">No registrations yet</td></tr>';
 }
 
@@ -904,17 +904,22 @@ $('regSearch').addEventListener('input', function() {
   ));
 });
 
-async function deleteReg(id) {
+$('regTable').addEventListener('click', async function(e) {
+  const btn = e.target.closest('.del-reg-btn');
+  if (!btn) return;
+  const id = btn.dataset.id;
   if (!confirm('Delete this registration? This cannot be undone.')) return;
+  btn.disabled = true;
+  btn.textContent = '…';
   try {
     const res = await api('/registrations/' + id, { method: 'DELETE' });
     if (res.success) { loadRegistrations(); toast('Registration deleted'); }
-    else { toast(res.error || 'Failed to delete', 'error'); alert('Delete failed: ' + (res.error || 'unknown error')); }
+    else { btn.disabled = false; btn.textContent = 'Delete'; toast(res.error || 'Failed to delete', 'error'); }
   } catch (err) {
+    btn.disabled = false; btn.textContent = 'Delete';
     toast('Error: ' + err.message, 'error');
-    alert('Delete error: ' + err.message);
   }
-}
+});
 
 // ── Messages ──────────────────────────────────────────────────────────────
 let currentMsgId = null;
