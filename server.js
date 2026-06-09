@@ -28,6 +28,7 @@ app.use(helmet({
   },
 }));
 
+app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
