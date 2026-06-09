@@ -496,12 +496,12 @@
         <div class="section-hdr"><h2>Registrations</h2></div>
         <div class="table-wrap">
           <div class="table-toolbar">
-            <input type="text" class="search-input" id="regSearch" placeholder="Search name, email, country…">
+            <input type="text" class="search-input" id="regSearch" placeholder="Search name, email, country, state…">
             <span id="regCount" style="font-size:.82rem;color:var(--gray-500)"></span>
           </div>
           <table>
-            <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Denomination</th><th>Date</th><th></th></tr></thead>
-            <tbody id="regTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
+            <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>State / Region</th><th>Denomination</th><th>Date</th><th></th></tr></thead>
+            <tbody id="regTable"><tr class="empty-row"><td colspan="7">Loading…</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -643,6 +643,10 @@ const api = async (path, opts = {}) => {
     ...opts,
     body: opts.body ? JSON.stringify(opts.body) : undefined,
   });
+  if (r.status === 401) {
+    showLogin();
+    return { success: false, error: 'Session expired. Please log in again.' };
+  }
   const ct = r.headers.get('content-type') || '';
   if (ct.includes('application/json')) return r.json();
   return { success: false, error: `Server error (HTTP ${r.status})` };
@@ -886,16 +890,17 @@ function renderRegs(regs) {
       <td>${esc(r.first_name)} ${esc(r.last_name)}</td>
       <td>${esc(r.email)}</td>
       <td>${esc(r.country||'—')}</td>
+      <td>${esc(r.state||'—')}</td>
       <td class="trunc">${esc(r.denomination||'—')}</td>
       <td>${fmtDate(r.created_at)}</td>
       <td><button class="btn btn-sm btn-danger" onclick="deleteReg(${r.id})">Delete</button></td>
-    </tr>`).join('') : '<tr class="empty-row"><td colspan="6">No registrations yet</td></tr>';
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="7">No registrations yet</td></tr>';
 }
 
 $('regSearch').addEventListener('input', function() {
   const q = this.value.toLowerCase();
   renderRegs(allRegs.filter(r =>
-    (r.first_name + ' ' + r.last_name + ' ' + r.email + ' ' + (r.country||'')).toLowerCase().includes(q)
+    (r.first_name + ' ' + r.last_name + ' ' + r.email + ' ' + (r.country||'') + ' ' + (r.state||'')).toLowerCase().includes(q)
   ));
 });
 
