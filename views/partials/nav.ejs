@@ -1,0 +1,31 @@
+<nav class="navbar<% if (scrolled) { %> scrolled<% } %>" id="navbar">
+  <div class="container nav-container">
+    <a href="/" class="logo">
+      <img src="/images/image1.png" alt="Syrian Christian Congress cross" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
+        <span class="logo-sub">الكونغرس المسيحي السوري</span>
+      </div>
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link<% if (activePage === 'home') { %> active<% } %>" data-i18n="nav.home">Home</a></li>
+        <li><a href="<%= activePage === 'home' ? '#about' : '/#about' %>" class="nav-link" data-i18n="nav.about">About</a></li>
+        <li><a href="/events.html" class="nav-link<% if (activePage === 'events') { %> active<% } %>" data-i18n="nav.events">Events</a></li>
+        <li><a href="/communities.html" class="nav-link<% if (activePage === 'communities') { %> active<% } %>" data-i18n="nav.communities">Communities</a></li>
+        <li><a href="/members.html" class="nav-link<% if (activePage === 'members') { %> active<% } %>" data-i18n="nav.members">Our Members</a></li>
+        <li><a href="/register.html" class="nav-link nav-link-register<% if (activePage === 'register') { %> active<% } %>" data-i18n="nav.register">Register</a></li>
+        <li><a href="/contact.html" class="nav-link<% if (activePage === 'contact') { %> active<% } %>" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">عربي</button>
+      </div>
+    </div>
+  </div>
+</nav>

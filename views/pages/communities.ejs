@@ -1,48 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Syrian Christian Communities and Traditions — An overview of the denominations and ethnic communities that form the Syrian Christian family.">
-  <title>Communities & Traditions — Syrian Christian Congress</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/communities.css">
+  <%- include('../partials/head', { title: 'Communities & Traditions — Syrian Christian Congress', description: 'Syrian Christian Communities and Traditions — An overview of the denominations and ethnic communities that form the Syrian Christian family.', extraCss: ['/css/communities.css'] }) %>
 </head>
 <body>
 
-<!-- ── Navigation ──────────────────────────────────────────────────────── -->
-<nav class="navbar scrolled" id="navbar">
-  <div class="container nav-container">
-    <a href="/" class="logo">
-      <img src="/images/image1.png" alt="Syrian Christian Congress cross" class="logo-img">
-      <div class="logo-text">
-        <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
-        <span class="logo-sub">الكونغرس المسيحي السوري</span>
-      </div>
-    </a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-menu" id="navMenu">
-      <ul class="nav-links">
-        <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
-        <li><a href="/#about" class="nav-link" data-i18n="nav.about">About</a></li>
-        <li><a href="/communities.html" class="nav-link active" data-i18n="nav.communities">Communities</a></li>
-        <li><a href="/members.html" class="nav-link" data-i18n="nav.members">Our Members</a></li>
-        <li><a href="/events.html" class="nav-link" data-i18n="nav.events">Events</a></li>
-        <li><a href="/register.html" class="nav-link nav-link-register" data-i18n="nav.register">Register</a></li>
-        <li><a href="/contact.html" class="nav-link" data-i18n="nav.contact">Contact</a></li>
-      </ul>
-      <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="ar">عربي</button>
-      </div>
-    </div>
-  </div>
-</nav>
+<%- include('../partials/nav', { activePage: 'communities', scrolled: true }) %>
 
 <!-- ── Page Hero ───────────────────────────────────────────────────────── -->
 <section class="comm-hero">
@@ -98,7 +61,6 @@
   <div class="container">
     <div class="denom-grid">
 
-      <!-- Syriac Orthodox -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/monastery-courtyard.jpg" alt="Syriac Orthodox monastery">
@@ -121,7 +83,6 @@
         </div>
       </div>
 
-      <!-- Syriac Catholic -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/church-ornate.jpg" alt="Syriac Catholic church">
@@ -144,7 +105,6 @@
         </div>
       </div>
 
-      <!-- Aramean/Syriac identity -->
       <div class="denom-card denom-card-identity animate-in">
         <div class="denom-card-img">
           <img src="/images/churches-collage.png" alt="Syriac-Aramean communities">
@@ -166,7 +126,7 @@
         </div>
       </div>
 
-    </div><!-- /denom-grid -->
+    </div>
   </div>
 </section>
 
@@ -188,7 +148,6 @@
   <div class="container">
     <div class="denom-grid">
 
-      <!-- Assyrian Church of the East -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/maaloula-christ.jpg" alt="Church of the East">
@@ -211,7 +170,6 @@
         </div>
       </div>
 
-      <!-- Chaldean Catholic -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/monastery-hillside.jpg" alt="Chaldean church">
@@ -234,7 +192,6 @@
         </div>
       </div>
 
-      <!-- Assyrian identity -->
       <div class="denom-card denom-card-identity animate-in">
         <div class="denom-card-img">
           <img src="/images/maaloula-city.jpg" alt="Assyrian communities">
@@ -278,7 +235,6 @@
   <div class="container">
     <div class="denom-grid two-col">
 
-      <!-- Rum Orthodox -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/monastery-courtyard.jpg" alt="Greek Orthodox church">
@@ -301,7 +257,6 @@
         </div>
       </div>
 
-      <!-- Melkite -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/hero-bg.png" alt="Melkite church" style="object-position:center 30%">
@@ -391,7 +346,6 @@
   <div class="container">
     <div class="denom-grid">
 
-      <!-- Armenian Apostolic -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/church-interior.jpg" alt="Armenian Apostolic church">
@@ -414,7 +368,6 @@
         </div>
       </div>
 
-      <!-- Armenian Catholic -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/church-ornate.jpg" alt="Armenian Catholic church">
@@ -436,7 +389,6 @@
         </div>
       </div>
 
-      <!-- Armenian Evangelical -->
       <div class="denom-card animate-in">
         <div class="denom-card-img">
           <img src="/images/maaloula-city.jpg" alt="Armenian Evangelical community">
@@ -540,60 +492,11 @@
   </div>
 </section>
 
-<!-- ── Footer ──────────────────────────────────────────────────────────── -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="/" class="logo">
-          <div class="logo-text">
-            <span class="logo-name" data-i18n="nav.logo">Syrian Christian Congress</span>
-          </div>
-        </a>
-        <p class="footer-tagline" data-i18n="footer.tagline">An institutional civic platform for Syrian Christians in Syria and the diaspora.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.links">Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="/" class="footer-link" data-i18n="nav.home">Home</a></li>
-          <li><a href="/communities.html" class="footer-link" data-i18n="nav.communities">Communities</a></li>
-          <li><a href="/events.html" class="footer-link" data-i18n="nav.events">Events</a></li>
-          <li><a href="/register.html" class="footer-link" data-i18n="nav.register">Register</a></li>
-          <li><a href="/contact.html" class="footer-link" data-i18n="nav.contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.follow">Follow Us</h4>
-        <div class="footer-social">
-          <a href="https://www.facebook.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn fb" aria-label="Facebook">
-            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          </a>
-          <a href="https://x.com/SyrianChristianCongress" target="_blank" rel="noopener" class="footer-social-btn x" aria-label="X (Twitter)">
-            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.cal_title">Event Calendar</h4>
-        <div class="cal-card">
-          <p data-i18n="footer.cal_body">Subscribe to stay updated with all our events.</p>
-          <button class="btn btn-gold btn-sm cal-subscribe-btn" data-i18n="footer.cal_btn">Subscribe to Calendar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <p data-i18n="footer.rights">© 2026 Syrian Christian Congress. All rights reserved.</p>
-      <a href="/admin/" class="admin-footer-link">Admin</a>
-    </div>
-  </div>
-</footer>
+<%- include('../partials/footer') %>
 
 <script src="/js/translations.js"></script>
 <script src="/js/main.js"></script>
 <script>
-// Highlight active tradition link on scroll
 const tradLinks = document.querySelectorAll('.trad-link');
 const tradSections = document.querySelectorAll('.tradition-section');
 window.addEventListener('scroll', () => {

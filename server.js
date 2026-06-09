@@ -12,6 +12,9 @@ const adminRoutes = require('./routes/admin');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -51,10 +54,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
 
-// SPA fallback — but don't override admin or API paths
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Page routes
+app.get('/', (req, res) => res.render('pages/index'));
+app.get('/events.html', (req, res) => res.render('pages/events'));
+app.get('/register.html', (req, res) => res.render('pages/register'));
+app.get('/contact.html', (req, res) => res.render('pages/contact'));
+app.get('/members.html', (req, res) => res.render('pages/members'));
+app.get('/communities.html', (req, res) => res.render('pages/communities'));
 
 initDatabase()
   .then(() => {
