@@ -11,9 +11,8 @@ const translations = {
     },
 
     hero: {
-      badge: 'Official Civic Platform',
       title: 'Syrian Christian Congress',
-      tagline: 'An institutional civic platform dedicated to organizing Syrian Christian presence, strengthening national participation, and advancing equal citizenship and the rule of law in a united, secure Syria for all its people.',
+      tagline: 'Dedicated to organizing Syrian Christian presence, strengthening national participation, and advancing equal citizenship and the rule of law in a united, secure Syria for all its people.',
       btn_register: 'Register Now',
       btn_learn: 'Learn More',
     },
@@ -100,7 +99,7 @@ const translations = {
     },
 
     footer: {
-      tagline: 'An institutional civic platform for Syrian Christians in Syria and the diaspora.',
+      tagline: 'For Syrian Christians in Syria and the diaspora.',
       links: 'Quick Links',
       follow: 'Follow Us',
       cal_title: 'Event Calendar',
@@ -232,9 +231,8 @@ const translations = {
     },
 
     hero: {
-      badge: 'منصة مدنية مؤسسية رسمية',
       title: 'الكونغرس المسيحي السوري',
-      tagline: 'منصة مدنية مؤسسية مكرّسة لتنظيم الحضور المسيحي السوري، وتعزيز المشاركة الوطنية، والنهوض بالمواطنة المتساوية وسيادة القانون في سوريا موحّدة وآمنة لجميع أبنائها.',
+      tagline: 'مكرّسون لتنظيم الحضور المسيحي السوري، وتعزيز المشاركة الوطنية، والنهوض بالمواطنة المتساوية وسيادة القانون في سوريا موحّدة وآمنة لجميع أبنائها.',
       btn_register: 'سجّل الآن',
       btn_learn: 'اعرف أكثر',
     },
@@ -321,7 +319,7 @@ const translations = {
     },
 
     footer: {
-      tagline: 'منصة مدنية مؤسسية للمسيحيين السوريين في الداخل والمهجر.',
+      tagline: 'للمسيحيين السوريين في الداخل والمهجر.',
       links: 'روابط سريعة',
       follow: 'تابعنا',
       cal_title: 'تقويم الفعاليات',
