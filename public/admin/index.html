@@ -614,16 +614,38 @@
   </div>
 </div>
 
+<!-- Confirm Modal -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <h3>Confirm</h3>
+      <button class="modal-close" onclick="closeConfirm()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirmMsg" style="font-size:.95rem;color:var(--gray-700);line-height:1.6"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
 const $ = id => document.getElementById(id);
-const api = (path, opts = {}) => fetch('/api/admin' + path, {
-  headers: { 'Content-Type': 'application/json' },
-  ...opts,
-  body: opts.body ? JSON.stringify(opts.body) : undefined,
-}).then(r => r.json());
+const api = async (path, opts = {}) => {
+  const r = await fetch('/api/admin' + path, {
+    headers: { 'Content-Type': 'application/json' },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  const ct = r.headers.get('content-type') || '';
+  if (ct.includes('application/json')) return r.json();
+  return { success: false, error: `Server error (HTTP ${r.status})` };
+};
 
 // ── Auth ──────────────────────────────────────────────────────────────────
 async function checkAuth() {
@@ -876,11 +898,16 @@ $('regSearch').addEventListener('input', function() {
   ));
 });
 
-async function deleteReg(id) {
-  if (!confirm('Delete this registration?')) return;
-  const res = await api('/registrations/' + id, { method: 'DELETE' });
-  if (res.success) { loadRegistrations(); toast('Registration deleted'); }
-  else toast('Failed to delete', 'error');
+function deleteReg(id) {
+  confirmDelete('Delete this registration? This cannot be undone.', async () => {
+    try {
+      const res = await api('/registrations/' + id, { method: 'DELETE' });
+      if (res.success) { loadRegistrations(); toast('Registration deleted'); }
+      else toast(res.error || 'Failed to delete', 'error');
+    } catch (err) {
+      toast('Error: ' + err.message, 'error');
+    }
+  });
 }
 
 // ── Messages ──────────────────────────────────────────────────────────────
@@ -1016,6 +1043,22 @@ async function pollRegistrationCount() {
     if (res.success) updateRegBadge(res.stats.total_registrations);
   } catch (_) {}
 }
+
+// ── Confirm modal ─────────────────────────────────────────────────────────
+let _confirmCallback = null;
+function confirmDelete(msg, onConfirm) {
+  $('confirmMsg').textContent = msg;
+  _confirmCallback = onConfirm;
+  $('confirmModal').classList.add('open');
+}
+function closeConfirm() {
+  $('confirmModal').classList.remove('open');
+  _confirmCallback = null;
+}
+$('confirmOkBtn').addEventListener('click', () => {
+  $('confirmModal').classList.remove('open');
+  if (_confirmCallback) { _confirmCallback(); _confirmCallback = null; }
+});
 
 // ── Boot ──────────────────────────────────────────────────────────────────
 checkAuth();
