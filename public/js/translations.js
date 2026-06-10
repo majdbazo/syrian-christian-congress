@@ -105,6 +105,10 @@ const translations = {
       cal_title: 'Event Calendar',
       cal_body: 'Subscribe to stay updated with all our events.',
       cal_btn: 'Subscribe to Calendar',
+      newsletter_title: 'Newsletter',
+      newsletter_body: 'Get updates from the Syrian Christian Congress delivered to your inbox.',
+      newsletter_ph: 'Your email address',
+      newsletter_btn: 'Subscribe',
       rights: '© 2026 Syrian Christian Congress. All rights reserved.',
     },
 
@@ -325,6 +329,10 @@ const translations = {
       cal_title: 'تقويم الفعاليات',
       cal_body: 'اشترك لتبقى على اطلاع بجميع فعالياتنا.',
       cal_btn: 'اشترك في التقويم',
+      newsletter_title: 'النشرة الإخبارية',
+      newsletter_body: 'احصل على آخر أخبار الكونغرس المسيحي السوري في بريدك الإلكتروني.',
+      newsletter_ph: 'بريدك الإلكتروني',
+      newsletter_btn: 'اشترك',
       rights: '© 2026 الكونغرس المسيحي السوري. جميع الحقوق محفوظة.',
     },
 
