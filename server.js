@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('view cache', false);
 
 app.use(helmet({
   contentSecurityPolicy: {
@@ -66,13 +67,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Page routes
-app.get('/', (req, res) => res.render('pages/index'));
-app.get('/events.html', (req, res) => res.render('pages/events'));
-app.get('/register.html', (req, res) => res.render('pages/register'));
-app.get('/contact.html', (req, res) => res.render('pages/contact'));
-app.get('/members.html', (req, res) => res.render('pages/members'));
-app.get('/communities.html', (req, res) => res.render('pages/communities'));
+// Page routes — no-cache so browsers always get the latest HTML
+const noCache = (req, res, next) => {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  next();
+};
+app.get('/', noCache, (req, res) => res.render('pages/index'));
+app.get('/events.html', noCache, (req, res) => res.render('pages/events'));
+app.get('/register.html', noCache, (req, res) => res.render('pages/register'));
+app.get('/contact.html', noCache, (req, res) => res.render('pages/contact'));
+app.get('/members.html', noCache, (req, res) => res.render('pages/members'));
+app.get('/communities.html', noCache, (req, res) => res.render('pages/communities'));
 
 initDatabase()
   .then(() => {

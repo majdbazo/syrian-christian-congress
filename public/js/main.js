@@ -1,5 +1,6 @@
 /* ── State ────────────────────────────────────────────────────────────────── */
-let currentLang = localStorage.getItem('scc-lang') || 'en';
+let currentLang = 'en';
+try { currentLang = localStorage.getItem('scc-lang') || 'en'; } catch {}
 let allEvents = [];
 
 /* ── Init ─────────────────────────────────────────────────────────────────── */
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function applyLanguage(lang) {
   if (!translations[lang]) lang = 'en';
   currentLang = lang;
-  localStorage.setItem('scc-lang', lang);
+  try { localStorage.setItem('scc-lang', lang); } catch {}
 
   const t = translations[lang];
   const html = document.documentElement;
@@ -79,7 +80,12 @@ function initNav() {
 
   // Language switcher
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    btn.addEventListener('click', () => {
+      applyLanguage(btn.dataset.lang);
+      hamburger?.classList.remove('open');
+      navMenu?.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    });
   });
 
   // Active link highlighting
@@ -170,9 +176,14 @@ function renderEvents(data) {
   const t = translations[currentLang];
   const upcomingContainer = document.getElementById('upcomingEvents');
   const pastContainer = document.getElementById('pastEvents');
+  const previewContainer = document.getElementById('eventsPreview');
 
   const upcoming = data.filter(e => e.event_type === 'upcoming');
   const past = data.filter(e => e.event_type === 'past');
+
+  if (previewContainer) {
+    renderEventCards(previewContainer, upcoming.slice(0, 3), true);
+  }
 
   if (upcomingContainer) {
     if (upcoming.length === 0) {
@@ -215,7 +226,7 @@ function renderEventCards(container, events, isPreview) {
         <div class="event-card-img">
           <img src="/images/${imgName}" alt="${title}"
                onerror="this.parentElement.classList.add('no-img')">
-          ${isPast ? '<div class="event-badge past-badge" data-i18n="events.past">Past</div>' : ''}
+          ${isPast ? `<div class="event-badge past-badge">${t.events.past}</div>` : ''}
         </div>
         <div class="event-card-body">
           <div class="event-meta">
