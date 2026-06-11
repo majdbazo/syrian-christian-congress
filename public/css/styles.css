@@ -323,7 +323,7 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 
   .nav-menu {
     position: fixed;
-    top: 0; right: -100%; bottom: 0;
+    top: 0; right: 0; bottom: 0;
     width: min(300px, 85vw);
     background: var(--navy-dark);
     flex-direction: column;
@@ -331,21 +331,22 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
     align-items: stretch;
     gap: 0;
     padding: 0;
-    transition: right var(--transition), left var(--transition);
+    transform: translateX(100%);
+    transition: transform var(--transition);
     box-shadow: -8px 0 40px rgba(0,0,0,.3);
     z-index: 999;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .nav-menu.open { right: 0; }
+  .nav-menu.open { transform: translateX(0); }
 
   /* RTL: drawer slides in from the left */
   html[dir="rtl"] .nav-menu {
-    right: auto;
-    left: -100%;
+    right: auto; left: 0;
+    transform: translateX(-100%);
     box-shadow: 8px 0 40px rgba(0,0,0,.3);
   }
-  html[dir="rtl"] .nav-menu.open { left: 0; }
+  html[dir="rtl"] .nav-menu.open { transform: translateX(0); }
 
   /* Close (×) button inside the drawer */
   .nav-close {
