@@ -56,6 +56,19 @@ function initNav() {
   const navbar = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const navMenu = document.getElementById('navMenu');
+  const navClose = document.getElementById('navClose');
+
+  function closeMenu() {
+    hamburger?.classList.remove('open');
+    navMenu?.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }
+
+  function openMenu() {
+    hamburger?.classList.add('open');
+    navMenu?.classList.add('open');
+    document.body.classList.add('menu-open');
+  }
 
   // Scroll: add solid class
   window.addEventListener('scroll', () => {
@@ -64,27 +77,36 @@ function initNav() {
 
   // Hamburger toggle
   hamburger?.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    navMenu.classList.toggle('open');
-    document.body.classList.toggle('menu-open');
+    navMenu?.classList.contains('open') ? closeMenu() : openMenu();
   });
 
-  // Close menu on link click
+  // Close button inside the drawer
+  navClose?.addEventListener('click', closeMenu);
+
+  // Close when clicking the overlay (outside the drawer)
+  document.addEventListener('click', (e) => {
+    if (navMenu?.classList.contains('open') &&
+        !navMenu.contains(e.target) &&
+        !hamburger?.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  // Close menu on nav-link click
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger?.classList.remove('open');
-      navMenu?.classList.remove('open');
-      document.body.classList.remove('menu-open');
-    });
+    link.addEventListener('click', closeMenu);
   });
 
   // Language switcher
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       applyLanguage(btn.dataset.lang);
-      hamburger?.classList.remove('open');
-      navMenu?.classList.remove('open');
-      document.body.classList.remove('menu-open');
+      closeMenu();
     });
   });
 
