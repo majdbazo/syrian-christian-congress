@@ -46,7 +46,7 @@
 
 /* ── Reset ────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; }
 body {
   font-family: 'Inter', sans-serif;
   color: var(--text);
@@ -402,8 +402,7 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
   .nav-link-register:hover { background: rgba(29,111,216,.15) !important; transform: none; }
   .nav-link-register.active { border-inline-start-width: 1px; }
 
-  /* Scroll lock + semi-transparent overlay */
-  body.menu-open { overflow: hidden; }
+  /* Semi-transparent overlay (scroll lock omitted — breaks fixed positioning on iOS) */
   body.menu-open::before {
     content: '';
     position: fixed; inset: 0;
