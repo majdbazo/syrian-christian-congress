@@ -167,7 +167,6 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 }
 .navbar.scrolled {
   background: rgba(17, 29, 58, 0.97);
-  backdrop-filter: blur(12px);
   box-shadow: 0 2px 20px rgba(0,0,0,.2);
 }
 .navbar-inner {
