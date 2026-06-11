@@ -229,7 +229,7 @@ const translations = {
 
     nav: {
       logo: 'الكونغرس المسيحي السوري',
-      home: 'الرئيسية', about: 'عن المؤتمر', events: 'الفعاليات',
+      home: 'الرئيسية', about: 'عن الكونغرس', events: 'الفعاليات',
       communities: 'المجتمعات', members: 'أعضاؤنا',
       register: 'التسجيل', contact: 'تواصل معنا',
     },
