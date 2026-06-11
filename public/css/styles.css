@@ -712,6 +712,46 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ══════════════════════════════════════════════════════════════════════════ */
+/*  X / TWITTER FEED SECTION                                                  */
+/* ══════════════════════════════════════════════════════════════════════════ */
+.x-feed-section { background: var(--navy-dark); }
+.x-feed-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.x-feed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.65);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .35rem .9rem;
+  border-radius: 100px;
+  margin-bottom: 1.25rem;
+}
+.x-feed-intro h2 { color: var(--white); margin-bottom: 1rem; }
+.x-feed-intro p  { color: rgba(255,255,255,.65); line-height: 1.8; margin-bottom: 2rem; }
+.x-feed-widget {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 200px;
+}
+
+@media (max-width: 900px) {
+  .x-feed-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .x-feed-intro p { margin-bottom: 1.5rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════ */
 /*  CTA SECTION                                                               */
 /* ══════════════════════════════════════════════════════════════════════════ */
 .cta-section {

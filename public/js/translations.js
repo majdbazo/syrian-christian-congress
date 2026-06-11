@@ -53,6 +53,12 @@ const translations = {
       preview_title: 'Upcoming Events',
     },
 
+    social: {
+      title: 'Follow Us on X',
+      body: 'Stay up to date with our latest news, announcements, and updates from the Syrian Christian Congress.',
+      follow_btn: 'Follow @SyChCongress',
+    },
+
     register: {
       page_title: 'Register',
       page_sub: 'Join the Syrian Christian Congress and become part of a growing civic movement.',
@@ -275,6 +281,12 @@ const translations = {
       subscribe: 'اشترك في التقويم',
       loading: 'جاري التحميل…',
       preview_title: 'الفعاليات القادمة',
+    },
+
+    social: {
+      title: 'تابعنا على X',
+      body: 'ابقَ على اطلاع بآخر أخبارنا وإعلاناتنا وتحديثات الكونغرس المسيحي السوري.',
+      follow_btn: 'تابع @SyChCongress',
     },
 
     register: {
