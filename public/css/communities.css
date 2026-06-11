@@ -261,4 +261,14 @@ html[lang="ar"] .en-only { display: none; }
   .tradition-header { height: 220px; }
   .trad-number { font-size: 2.5rem; }
   .denom-details { grid-template-columns: 1fr; }
+  .unity-actions { flex-direction: column; align-items: stretch; }
+  .unity-actions .btn { justify-content: center; }
+}
+
+@media (max-width: 420px) {
+  .tradition-header { height: 180px; }
+  .tradition-header-content h2 { font-size: 1.4rem; }
+  .trad-number { font-size: 1.8rem; }
+  .trad-link { padding: .75rem .875rem; font-size: .8rem; }
+  .comm-hero-content { padding-block: 2.5rem; }
 }

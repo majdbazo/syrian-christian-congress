@@ -144,3 +144,12 @@
   .country-bar { grid-template-columns: 120px 1fr 40px; gap: .6rem; }
   .country-name { font-size: .78rem; }
 }
+
+@media (max-width: 420px) {
+  .mem-stats-row { grid-template-columns: 1fr; max-width: 280px; }
+  .mem-stat-card { padding: 1.25rem 1rem; }
+  .mem-stat-val { font-size: 2rem; }
+  .country-bar { grid-template-columns: 90px 1fr 36px; gap: .4rem; }
+  .country-name { font-size: .72rem; }
+  .country-count { font-size: .78rem; }
+}

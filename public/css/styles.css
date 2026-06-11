@@ -46,7 +46,7 @@
 
 /* ── Reset ────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   font-family: 'Inter', sans-serif;
   color: var(--text);
@@ -575,7 +575,7 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 .events-section { background: var(--light-bg); }
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: 1.5rem;
 }
 .event-card {
@@ -935,7 +935,7 @@ html[lang="ar"] .en-only { display: none; }
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
 }
-@media (max-width: 500px) {
+@media (max-width: 640px) {
   .footer-grid { grid-template-columns: 1fr; }
 }
 
@@ -947,6 +947,9 @@ html[lang="ar"] .en-only { display: none; }
   .hero-content { padding-block: 5.5rem 2.5rem; }
   .hero-actions { flex-direction: column; align-items: stretch; gap: .75rem; }
   .hero-actions .btn { width: 100%; justify-content: center; padding: 1rem; }
+
+  /* Inner page hero: reduce excessive padding */
+  .page-hero { padding: calc(var(--nav-height) + 1.5rem) 0 2.5rem; }
 
   /* Section header: stack title and action button vertically */
   .section-header { flex-direction: column; align-items: flex-start; gap: .75rem; margin-bottom: 1.75rem; }
@@ -966,6 +969,13 @@ html[lang="ar"] .en-only { display: none; }
   /* CTA button */
   .cta-section .btn { width: 100%; max-width: 320px; justify-content: center; }
 
+  /* Calendar banner: stack on mobile */
+  .cal-banner { flex-direction: column; align-items: flex-start; padding: 1.25rem; gap: 1rem; }
+  .cal-banner .btn { width: 100%; justify-content: center; }
+
+  /* Newsletter input touch target */
+  .newsletter-input { min-height: 44px; }
+
   /* Footer bottom */
   .footer-bottom .container { flex-direction: column; gap: .4rem; text-align: center; }
 
@@ -973,6 +983,12 @@ html[lang="ar"] .en-only { display: none; }
   .btn { min-height: 44px; }
   .nav-link { min-height: 44px; display: flex; align-items: center; }
   .lang-btn { min-height: 36px; }
+}
+
+@media (max-width: 480px) {
+  /* Hide logo text so nav doesn't overflow on small phones */
+  .logo-text { display: none; }
+  .logo-img { height: 38px; }
 }
 
 @media (max-width: 420px) {
@@ -987,6 +1003,9 @@ html[lang="ar"] .en-only { display: none; }
 
   /* Hero title slightly smaller */
   .hero-title { font-size: clamp(2rem, 8vw, 2.4rem); }
+
+  /* Page hero tighter on very small phones */
+  .page-hero { padding: calc(var(--nav-height) + 1rem) 0 2rem; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════ */
@@ -1008,8 +1027,13 @@ html[lang="ar"] .en-only { display: none; }
   border-radius: var(--radius);
   padding: .3rem;
   width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
   margin-bottom: 2rem;
 }
+.events-tabs::-webkit-scrollbar { display: none; }
 .events-tab {
   padding: .6rem 1.5rem;
   border-radius: var(--radius-sm);
