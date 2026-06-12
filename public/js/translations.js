@@ -6,7 +6,7 @@ const translations = {
     nav: {
       logo: 'Syrian Christian Congress',
       home: 'Home', about: 'About', events: 'Events',
-      communities: 'Communities', founders: 'Founding Members',
+      communities: 'Communities', founders: 'Founders',
       members: 'Our Members', register: 'Register', contact: 'Contact',
     },
 
@@ -218,7 +218,7 @@ const translations = {
 
     founders: {
       hero_badge: 'The Congress Foundation',
-      hero_title: 'Founding Members',
+      hero_title: 'Founders',
       hero_intro: 'The individuals who came together to establish the Syrian Christian Congress, united by a shared commitment to building a dignified and organized Syrian Christian civic presence.',
       intro: "The founding members of the Syrian Christian Congress represent a broad cross-section of Syria's Christian communities, drawn from different traditions, regions, and walks of life. What unites them is a common conviction: that Syrian Christians must have an organized, transparent, and responsible voice in the shaping of Syria's future. Their decision to come together marks the beginning of a new chapter in Syrian Christian civic life.",
     },

@@ -232,10 +232,10 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
   gap: .25rem;
 }
 .nav-link {
-  font-size: .9rem;
+  font-size: .82rem;
   font-weight: 500;
   color: rgba(255,255,255,.85);
-  padding: .45rem .75rem;
+  padding: .45rem .5rem;
   border-radius: var(--radius-sm);
   transition: var(--transition);
   position: relative;
@@ -317,7 +317,7 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 .nav-close { display: none; }
 
 /* Mobile nav */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .hamburger { display: flex; }
 
   .nav-menu {
