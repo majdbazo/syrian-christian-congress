@@ -6,8 +6,8 @@ const translations = {
     nav: {
       logo: 'Syrian Christian Congress',
       home: 'Home', about: 'About', events: 'Events',
-      communities: 'Communities', members: 'Our Members',
-      register: 'Register', contact: 'Contact',
+      communities: 'Communities', founders: 'Founding Members',
+      members: 'Our Members', register: 'Register', contact: 'Contact',
     },
 
     hero: {
@@ -216,6 +216,13 @@ const translations = {
       desc_prot6: "A variety of independent evangelical congregations operate across Syria's cities through informal networks and regional evangelical fellowships, emphasizing biblical preaching, social outreach, and lay leadership in Arabic.",
     },
 
+    founders: {
+      hero_badge: 'The Congress Foundation',
+      hero_title: 'Founding Members',
+      hero_intro: 'The individuals who came together to establish the Syrian Christian Congress, united by a shared commitment to building a dignified and organized Syrian Christian civic presence.',
+      intro: "The founding members of the Syrian Christian Congress represent a broad cross-section of Syria's Christian communities, drawn from different traditions, regions, and walks of life. What unites them is a common conviction: that Syrian Christians must have an organized, transparent, and responsible voice in the shaping of Syria's future. Their decision to come together marks the beginning of a new chapter in Syrian Christian civic life.",
+    },
+
     members: {
       page_title: 'Our Members',
       page_sub: 'A look at the global reach of the Syrian Christian Congress, members from Syria and the diaspora.',
@@ -236,8 +243,8 @@ const translations = {
     nav: {
       logo: 'الكونغرس المسيحي السوري',
       home: 'الرئيسية', about: 'عن الكونغرس', events: 'الفعاليات',
-      communities: 'المجتمعات', members: 'أعضاؤنا',
-      register: 'التسجيل', contact: 'تواصل معنا',
+      communities: 'المجتمعات', founders: 'الأعضاء المؤسسون',
+      members: 'أعضاؤنا', register: 'التسجيل', contact: 'تواصل معنا',
     },
 
     hero: {
@@ -444,6 +451,13 @@ const translations = {
       desc_prot4: 'المجتمعات البريسبيترية في سوريا مرتبطة بالمجمع الإنجيلي أو بتجمعات مستقلة، وقد أسهمت إسهاماً كبيراً في التعليم والخدمة الاجتماعية وتتبع العقيدة الإصلاحية.',
       desc_prot5: 'تنامت التجمعات الخمسينية والكاريزمية في سوريا منذ منتصف القرن العشرين، تؤكد على التجربة الروحية الشخصية والشفاء والتبشير مع عبادة باللغة العربية.',
       desc_prot6: 'تعمل كنائس إنجيلية مستقلة متنوعة في مدن سوريا عبر شبكات غير رسمية، تؤكد على التعليم الكتابي والخدمة الاجتماعية والقيادة العلمانية باللغة العربية.',
+    },
+
+    founders: {
+      hero_badge: 'تأسيس الكونغرس',
+      hero_title: 'الأعضاء المؤسسون',
+      hero_intro: 'الأفراد الذين اجتمعوا لتأسيس الكونغرس المسيحي السوري، متحدين بالتزام مشترك ببناء حضور مدني مسيحي سوري كريم ومنظّم.',
+      intro: 'يمثّل الأعضاء المؤسسون للكونغرس المسيحي السوري طيفاً واسعاً من المجتمعات المسيحية السورية، ينتمون إلى تقاليد ومناطق ومسارات حياة متعددة. ما يجمعهم قناعة مشتركة: أن المسيحيين السوريين يجب أن يمتلكوا صوتاً منظّماً وشفافاً ومسؤولاً في صياغة مستقبل سوريا. قرارهم بالاجتماع يمثّل بداية فصل جديد في الحياة المدنية المسيحية السورية.',
     },
 
     members: {

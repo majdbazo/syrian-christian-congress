@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <%- include('../partials/head', { title: 'Founding Members | Syrian Christian Congress', description: 'The founding members of the Syrian Christian Congress, the individuals who came together to establish a civic platform for Syrian Christians in Syria and the diaspora.', extraCss: ['/css/founders.css'] }) %>
+</head>
+<body>
+
+<%- include('../partials/nav', { activePage: 'founders', scrolled: true }) %>
+
+<!-- Hero -->
+<section class="founders-hero">
+  <div class="founders-hero-bg">
+    <img src="/images/hero-bg.png" alt="" class="founders-hero-img">
+    <div class="founders-hero-overlay"></div>
+  </div>
+  <div class="container founders-hero-content">
+    <div class="hero-badge" data-i18n="founders.hero_badge">The Congress Foundation</div>
+    <h1 data-i18n="founders.hero_title">Founding Members</h1>
+    <p data-i18n="founders.hero_intro">The individuals who came together to establish the Syrian Christian Congress, united by a shared commitment to building a dignified and organized Syrian Christian civic presence.</p>
+  </div>
+</section>
+
+<!-- Intro -->
+<section class="section founders-intro-section">
+  <div class="container">
+    <div class="founders-intro animate-in">
+      <p data-i18n="founders.intro">The founding members of the Syrian Christian Congress represent a broad cross-section of Syria's Christian communities, drawn from different traditions, regions, and walks of life. What unites them is a common conviction: that Syrian Christians must have an organized, transparent, and responsible voice in the shaping of Syria's future. Their decision to come together marks the beginning of a new chapter in Syrian Christian civic life.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Founders Grid -->
+<section class="section founders-grid-section">
+  <div class="container">
+    <div class="founders-grid" id="foundersGrid">
+
+      <!-- Founder cards will be added here -->
+
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/translations.js?v=2"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

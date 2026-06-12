@@ -79,6 +79,7 @@ app.get('/register.html', noCache, (req, res) => res.render('pages/register'));
 app.get('/contact.html', noCache, (req, res) => res.render('pages/contact'));
 app.get('/members.html', noCache, (req, res) => res.render('pages/members'));
 app.get('/communities.html', noCache, (req, res) => res.render('pages/communities'));
+app.get('/founders.html', noCache, (req, res) => res.render('pages/founders'));
 
 initDatabase()
   .then(() => {
