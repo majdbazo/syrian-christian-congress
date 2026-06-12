@@ -175,6 +175,9 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 
 .nav-container {
   height: var(--nav-height);
+  width: 100%;
+  max-width: none;
+  padding-inline: clamp(1rem, 3vw, 2rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -627,12 +630,17 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 /*  WHY JOIN                                                                  */
 /* ══════════════════════════════════════════════════════════════════════════ */
 .why-join-section { background: var(--navy); }
-.why-join-section .section-title { color: var(--white); }
+.why-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.why-header .section-title { color: var(--white); margin-bottom: 1rem; }
+.why-header .section-title::after { margin: .6rem auto 0; }
 .why-join-section .section-sub {
   color: rgba(255,255,255,.82);
   font-size: 1.05rem; line-height: 1.8;
-  max-width: 680px; margin: 0 auto 2.5rem;
-  text-align: center; display: block;
+  max-width: 680px; margin: 0 auto;
+  display: block;
 }
 .why-grid {
   display: grid;
