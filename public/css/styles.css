@@ -890,6 +890,14 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
   align-items: start;
 }
 .contact-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-email-link {
+  display: inline-block;
+  font-size: .95rem; font-weight: 500;
+  color: var(--primary);
+  word-break: break-all;
+  text-decoration: none;
+}
+.contact-email-link:hover { color: var(--primary-dark); text-decoration: underline; }
 .info-card {
   background: var(--white);
   border-radius: var(--radius-lg);
