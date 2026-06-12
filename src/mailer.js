@@ -10,14 +10,15 @@ function createTransport() {
   });
 }
 
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'Info@syrianchristiancongress.org';
+
 async function sendRegistrationNotification(reg) {
-  const to = process.env.ADMIN_EMAIL;
   const transporter = createTransport();
-  if (!transporter || !to) return;
+  if (!transporter) return;
 
   await transporter.sendMail({
     from: `"Syrian Christian Congress" <${process.env.SMTP_USER}>`,
-    to,
+    to: ADMIN_EMAIL,
     subject: `New Registration: ${reg.first_name} ${reg.last_name}`,
     html: `
       <div style="font-family:sans-serif;max-width:520px;margin:0 auto">
@@ -36,4 +37,28 @@ async function sendRegistrationNotification(reg) {
   });
 }
 
-module.exports = { sendRegistrationNotification };
+async function sendContactNotification(msg) {
+  const transporter = createTransport();
+  if (!transporter) return;
+
+  await transporter.sendMail({
+    from: `"Syrian Christian Congress" <${process.env.SMTP_USER}>`,
+    to: ADMIN_EMAIL,
+    replyTo: msg.email,
+    subject: `New Contact Message: ${msg.subject || '(no subject)'}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto">
+        <h2 style="color:#1e3a5f">New Contact Message</h2>
+        <table style="width:100%;border-collapse:collapse">
+          <tr><td style="padding:6px 0;color:#666;width:140px">From</td><td style="padding:6px 0"><strong>${msg.name}</strong></td></tr>
+          <tr><td style="padding:6px 0;color:#666">Email</td><td style="padding:6px 0">${msg.email}</td></tr>
+          <tr><td style="padding:6px 0;color:#666">Subject</td><td style="padding:6px 0">${msg.subject || '—'}</td></tr>
+          <tr><td style="padding:6px 0;color:#666;vertical-align:top">Message</td><td style="padding:6px 0;white-space:pre-wrap">${msg.message}</td></tr>
+        </table>
+        <p style="margin-top:1.5rem;font-size:.85rem;color:#999">View all messages in the <a href="${process.env.SITE_URL || ''}/admin/">Admin Dashboard</a>.</p>
+      </div>
+    `,
+  });
+}
+
+module.exports = { sendRegistrationNotification, sendContactNotification };

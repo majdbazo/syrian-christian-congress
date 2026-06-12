@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../src/db');
-const { sendRegistrationNotification } = require('../src/mailer');
+const { sendRegistrationNotification, sendContactNotification } = require('../src/mailer');
 
 const safe = (str) => (typeof str === 'string' ? str.trim().slice(0, 2000) : '');
 
@@ -55,10 +55,12 @@ router.post('/contact', async (req, res) => {
     return res.status(400).json({ success: false, error: 'Required fields missing' });
 
   try {
-    await db.addContact({
+    const contact = {
       name: safe(name), email: safe(email).toLowerCase(),
       subject: safe(subject), message: safe(message),
-    });
+    };
+    await db.addContact(contact);
+    sendContactNotification(contact).catch(err => console.error('Contact notification failed:', err));
     res.json({ success: true, message: 'Message received' });
   } catch (err) {
     console.error(err);
