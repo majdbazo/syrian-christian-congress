@@ -178,7 +178,6 @@ const pgInit = async (client) => {
 
 /* ── Init ─────────────────────────────────────────────────────────────────── */
 const initDatabase = async () => {
-  console.log('DATABASE_URL present:', !!process.env.DATABASE_URL);
   if (!process.env.DATABASE_URL) {
     memStore = new MemStore();
     console.log('Running with in-memory store (no DATABASE_URL set)');
