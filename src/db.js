@@ -178,6 +178,17 @@ const pgInit = async (client) => {
   await client.query(`CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     id SERIAL PRIMARY KEY, email VARCHAR(255) UNIQUE NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`);
+  await client.query(`CREATE TABLE IF NOT EXISTS settings (
+    key VARCHAR(100) PRIMARY KEY, value TEXT NOT NULL DEFAULT ''
+  )`);
+  const defaults = [
+    ['contact_email', 'Info@syrianchristiancongress.org'],
+    ['facebook_url', 'https://www.facebook.com/share/1Ct9Vve7wV/?mibextid=wwXIfr'],
+    ['x_url', 'https://x.com/SyChCongress'],
+  ];
+  for (const [key, value] of defaults) {
+    await client.query(`INSERT INTO settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO NOTHING`, [key, value]);
+  }
   const { rows } = await client.query('SELECT COUNT(*) FROM events');
   if (parseInt(rows[0].count) === 0) {
     for (const e of seedData) {
@@ -323,17 +334,33 @@ const db = {
     await pool.query('DELETE FROM newsletter_subscribers WHERE id=$1', [id]);
   },
 
-  // Settings (file-based, same for both modes)
-  async getSettings() { return readSettings(); },
+  // Settings
+  async getSettings() {
+    if (memStore) return readSettings();
+    const { rows } = await pool.query('SELECT key, value FROM settings');
+    const s = { contact_email: '', facebook_url: '', x_url: '' };
+    for (const r of rows) s[r.key] = r.value;
+    return s;
+  },
   async saveSettings(data) {
-    const current = readSettings();
-    const updated = {
-      contact_email: typeof data.contact_email === 'string' ? data.contact_email.trim() : current.contact_email,
-      facebook_url: typeof data.facebook_url === 'string' ? data.facebook_url.trim() : current.facebook_url,
-      x_url: typeof data.x_url === 'string' ? data.x_url.trim() : current.x_url,
-    };
-    writeSettings(updated);
-    return updated;
+    if (memStore) {
+      const current = readSettings();
+      const updated = {
+        contact_email: typeof data.contact_email === 'string' ? data.contact_email.trim() : current.contact_email,
+        facebook_url: typeof data.facebook_url === 'string' ? data.facebook_url.trim() : current.facebook_url,
+        x_url: typeof data.x_url === 'string' ? data.x_url.trim() : current.x_url,
+      };
+      writeSettings(updated);
+      return updated;
+    }
+    const keys = ['contact_email', 'facebook_url', 'x_url'];
+    for (const key of keys) {
+      if (typeof data[key] === 'string') {
+        await pool.query(`INSERT INTO settings (key, value) VALUES ($1, $2)
+          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value`, [key, data[key].trim()]);
+      }
+    }
+    return this.getSettings();
   },
 };
 
