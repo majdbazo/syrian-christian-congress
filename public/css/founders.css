@@ -13,7 +13,7 @@
 }
 .founders-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(30,20,10,.88), rgba(90,60,20,.75));
+  background: linear-gradient(135deg, rgba(17,29,58,.92), rgba(27,45,91,.80));
 }
 .founders-hero-content {
   position: relative; z-index: 1;
@@ -24,25 +24,35 @@
   font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: 800; letter-spacing: -.02em;
   margin: .5rem 0 1rem;
+  color: #fff;
 }
 .founders-hero-content p {
   font-size: 1.1rem; max-width: 640px;
-  margin: 0 auto; opacity: .88; line-height: 1.7;
+  margin: 0 auto; line-height: 1.7;
+  color: rgba(255,255,255,.9);
 }
 
 /* ── Intro ─────────────────────────────────────────────────────────────── */
-.founders-intro-section { background: var(--off-white); padding-bottom: 2rem; }
+.founders-intro-section {
+  background: #fff;
+  padding-top: 3rem;
+  padding-bottom: 2.5rem;
+}
 .founders-intro {
   max-width: 780px; margin: 0 auto;
   text-align: center;
 }
 .founders-intro p {
-  font-size: 1.05rem; line-height: 1.8;
-  color: var(--text-secondary);
+  font-size: 1.05rem; line-height: 1.85;
+  color: var(--navy);
 }
 
 /* ── Grid ──────────────────────────────────────────────────────────────── */
-.founders-grid-section { background: #fff; }
+.founders-grid-section {
+  background: var(--light-bg);
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
 .founders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -51,8 +61,9 @@
 
 /* ── Founder Card ──────────────────────────────────────────────────────── */
 .founder-card {
-  background: var(--off-white);
+  background: #fff;
   border-radius: 1rem;
+  border: 1px solid var(--border);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -63,13 +74,13 @@
 }
 .founder-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.1);
+  box-shadow: 0 12px 32px rgba(29,111,216,.12);
 }
 .founder-photo-wrap {
   width: 130px; height: 130px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid var(--gold);
+  border: 3px solid var(--primary);
   margin-bottom: 1.25rem;
   flex-shrink: 0;
 }
@@ -79,18 +90,18 @@
 }
 .founder-name {
   font-size: 1.1rem; font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 .25rem;
+  color: var(--navy);
+  margin: 0 0 .3rem;
 }
 .founder-role {
-  font-size: .8rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .06em;
-  color: var(--gold);
+  font-size: .78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--primary-dark);
   margin-bottom: 1rem;
 }
 .founder-bio {
-  font-size: .875rem; line-height: 1.7;
-  color: var(--text-secondary);
+  font-size: .9rem; line-height: 1.75;
+  color: #444;
 }
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
