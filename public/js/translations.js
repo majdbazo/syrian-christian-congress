@@ -232,12 +232,6 @@ const translations = {
       hero_title: 'Founders',
       hero_intro: 'The individuals who came together to establish the Syrian Christian Congress, united by a shared commitment to building a dignified and organized Syrian Christian civic presence.',
       intro: "The founding members of the Syrian Christian Congress represent a broad cross-section of Syria's Christian communities, drawn from different traditions, regions, and walks of life. What unites them is a common conviction: that Syrian Christians must have an organized, transparent, and responsible voice in the shaping of Syria's future. Their decision to come together marks the beginning of a new chapter in Syrian Christian civic life.",
-      hisham_name: 'Hisham Shamieh',
-      hisham_role: 'Translator',
-      hisham_bio: 'Syrian translator specializing in works on the history of the Arab world and its pre-Islamic religions, comparative religion, and critical studies.',
-      sally_name: 'Sally Obeid',
-      sally_role: 'Writer & Commentator',
-      sally_bio: 'Writer and commentator with a strong interest in Islamic tradition, particularly the role of women in Islamic scholarship, family life, and community leadership.',
     },
 
     members: {
@@ -485,12 +479,6 @@ const translations = {
       hero_badge: 'تأسيس الكونغرس',
       hero_title: 'الأعضاء المؤسسون',
       hero_intro: 'الأفراد الذين اجتمعوا لتأسيس الكونغرس المسيحي السوري، متحدين بالتزام مشترك ببناء حضور مدني مسيحي سوري كريم ومنظّم.',
-      hisham_name: 'هشام شامية',
-      hisham_role: 'مترجم',
-      hisham_bio: 'مترجم سوري، يعمل على ترجمة وتقديم كتب ودراسات في تاريخ المنطقة العربية وأديانها قبل الإسلام، والدين المقارن.',
-      sally_name: 'سالي عبيد',
-      sally_role: 'كاتبة ومعلّقة',
-      sally_bio: 'كاتبة ومعلّقة تهتم بالتراث الإسلامي، ولا سيما دور المرأة في الفقه الإسلامي والحياة الأسرية والقيادة المجتمعية.',
       intro: 'يمثّل الأعضاء المؤسسون للكونغرس المسيحي السوري طيفاً واسعاً من المجتمعات المسيحية السورية، ينتمون إلى تقاليد ومناطق ومسارات حياة متعددة. ما يجمعهم قناعة مشتركة: أن المسيحيين السوريين يجب أن يمتلكوا صوتاً منظّماً وشفافاً ومسؤولاً في صياغة مستقبل سوريا. قرارهم بالاجتماع يمثّل بداية فصل جديد في الحياة المدنية المسيحية السورية.',
     },
 
