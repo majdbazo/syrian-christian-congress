@@ -28,6 +28,17 @@ const translations = {
       stat3_lbl: 'Denominations',
     },
 
+    why: {
+      title: 'Why Join?',
+      intro: "Because organized participation is the clearest path to protecting the community's presence, strengthening its national voice, and contributing to a Syrian future based on justice and equality.",
+      r1_title: 'Help Shape a Clear National Position',
+      r1_body: 'Join a responsible dialogue aimed at developing a civic and political vision that reflects the aspirations of Syrian Christians within an inclusive national framework.',
+      r2_title: 'Organize Presence in Syria and the Diaspora',
+      r2_body: 'Be part of an institutional effort that connects Syrian Christians across countries and turns diaspora presence into an organized and effective force.',
+      r3_title: 'Support Citizenship and the Rule of Law',
+      r3_body: 'Take part in an initiative committed to a united, civil, and secure Syria based on full equality among all its citizens.',
+    },
+
     mission: {
       title: 'Our Mission & Vision',
       m1_title: 'An Authentic National Presence',
@@ -263,6 +274,17 @@ const translations = {
       stat2_lbl: 'لغات',
       stat3_val: '١٠+',
       stat3_lbl: 'طوائف',
+    },
+
+    why: {
+      title: 'لماذا تنضم؟',
+      intro: 'لأن المشاركة المنظّمة هي الطريق الأوضح لحماية حضور المجتمع وتعزيز صوته الوطني، والإسهام في مستقبل سوري قائم على العدالة والمساواة.',
+      r1_title: 'ساعد في تشكيل موقف وطني واضح',
+      r1_body: 'شارك في حوار مسؤول يسعى إلى بلورة رؤية سياسية ومدنية تعبّر عن تطلعات المسيحيين السوريين في إطار وطني جامع.',
+      r2_title: 'نظّم الحضور في سوريا والمهجر',
+      r2_body: 'كن جزءًا من عمل مؤسسي يربط المسيحيين السوريين في مختلف البلدان، ويحوّل الانتشار إلى قوة منظمة وفاعلة.',
+      r3_title: 'ادعم المواطنة وسيادة القانون',
+      r3_body: 'شارك في مبادرة تدافع عن سوريا موحّدة ومدنية وآمنة، تقوم على المساواة الكاملة بين جميع مواطنيها.',
     },
 
     mission: {

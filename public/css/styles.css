@@ -624,6 +624,44 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
 @media (min-width: 600px) and (max-width: 900px) { .mission-grid { grid-template-columns: 1fr 1fr; } }
 
 /* ══════════════════════════════════════════════════════════════════════════ */
+/*  WHY JOIN                                                                  */
+/* ══════════════════════════════════════════════════════════════════════════ */
+.why-join-section { background: var(--navy); }
+.why-join-section .section-title { color: var(--white); }
+.why-join-section .section-sub {
+  color: rgba(255,255,255,.82);
+  font-size: 1.05rem; line-height: 1.8;
+  max-width: 680px; margin: 0 auto 2.5rem;
+  text-align: center; display: block;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.why-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  transition: background .2s, transform .2s;
+}
+.why-card:hover { background: rgba(255,255,255,.12); transform: translateY(-4px); }
+.why-icon {
+  width: 52px; height: 52px;
+  background: var(--primary);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.why-icon svg { width: 24px; height: 24px; stroke: #fff; }
+.why-card h3 { color: var(--white); font-size: 1.05rem; margin-bottom: .75rem; }
+.why-card p { color: rgba(255,255,255,.75); font-size: .93rem; line-height: 1.75; }
+@media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; gap: 1rem; } }
+@media (min-width: 600px) and (max-width: 900px) { .why-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ══════════════════════════════════════════════════════════════════════════ */
 /*  EVENTS (shared card styles)                                               */
 /* ══════════════════════════════════════════════════════════════════════════ */
 .events-section { background: var(--light-bg); }
