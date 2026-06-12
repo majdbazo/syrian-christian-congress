@@ -7,7 +7,7 @@ const translations = {
       logo: 'Syrian Christian Congress',
       home: 'Home', about: 'About', events: 'Events',
       communities: 'Communities', founders: 'Founders',
-      members: 'Our Members', register: 'Register', contact: 'Contact',
+      members: 'Members', register: 'Register', contact: 'Contact',
     },
 
     hero: {
