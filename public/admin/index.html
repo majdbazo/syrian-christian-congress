@@ -923,25 +923,29 @@ $('regTable').addEventListener('click', async function(e) {
 
 // ── Messages ──────────────────────────────────────────────────────────────
 let currentMsgId = null;
+let messagesCache = [];
 async function loadMessages() {
   const res = await api('/messages');
   if (!res.success) return;
+  messagesCache = res.messages;
   $('msgTable').innerHTML = res.messages.length ? res.messages.map(m => `
     <tr>
       <td>${esc(m.name)}</td>
       <td>${esc(m.email)}</td>
       <td class="trunc">${esc(m.subject||'—')}</td>
       <td>${fmtDate(m.created_at)}</td>
-      <td><button class="btn btn-sm btn-ghost" onclick="viewMsg(${m.id},'${esc(m.name)}','${esc(m.email)}','${esc(m.subject||'')}',\`${esc(m.message)}\`)">View</button></td>
+      <td><button class="btn btn-sm btn-ghost" onclick="viewMsg(${m.id})">View</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="5">No messages yet</td></tr>';
 }
 
-function viewMsg(id, name, email, subject, message) {
+function viewMsg(id) {
+  const m = messagesCache.find(m => m.id === id);
+  if (!m) return;
   currentMsgId = id;
-  $('msgModalTitle').textContent = `Message from ${name}`;
+  $('msgModalTitle').textContent = `Message from ${esc(m.name)}`;
   $('msgModalBody').innerHTML = `
-    <p style="font-size:.8rem;color:var(--gray-400);margin-bottom:1rem">${email}${subject ? ' · ' + subject : ''}</p>
-    <div class="msg-body">${message}</div>`;
+    <p style="font-size:.8rem;color:var(--gray-400);margin-bottom:1rem">${esc(m.email)}${m.subject ? ' · ' + esc(m.subject) : ''}</p>
+    <div class="msg-body" style="white-space:pre-wrap">${esc(m.message)}</div>`;
   $('msgModal').classList.add('open');
 }
 $('closeMsgModal').addEventListener('click', () => $('msgModal').classList.remove('open'));
