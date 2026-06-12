@@ -509,14 +509,32 @@ document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
 
 /* ── Newsletter ────────────────────────────────────────────────────────────── */
 document.querySelectorAll('.newsletter-form').forEach(form => {
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const input = this.querySelector('input[type="email"]');
     const btn = this.querySelector('button[type="submit"]');
+    const email = input.value.trim();
+    if (!email) return;
     const original = btn.textContent;
-    btn.textContent = 'Subscribed!';
+    btn.textContent = '…';
     btn.disabled = true;
-    input.value = '';
-    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3000);
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      }).then(r => r.json());
+      if (res.success) {
+        btn.textContent = '✓';
+        input.value = '';
+        setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3000);
+      } else {
+        btn.textContent = res.error === 'Already subscribed' ? 'Already subscribed' : 'Error';
+        setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3000);
+      }
+    } catch {
+      btn.textContent = 'Error';
+      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3000);
+    }
   });
 });

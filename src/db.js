@@ -85,9 +85,11 @@ class MemStore {
     this.events = seedData.map(e => ({ ...e }));
     this.registrations = [];
     this.contacts = [];
+    this.newsletter = [];
     this._nextEventId = 6;
     this._nextRegId = 1;
     this._nextContactId = 1;
+    this._nextNewsletterId = 1;
   }
 
   // Events
@@ -142,6 +144,16 @@ class MemStore {
       .map(([country, count]) => ({ country, count }))
       .sort((a, b) => b.count - a.count);
   }
+
+  // Newsletter
+  async addNewsletterSubscriber(email) {
+    if (this.newsletter.find(s => s.email === email)) {
+      const err = new Error('duplicate'); err.code = '23505'; throw err;
+    }
+    this.newsletter.push({ id: this._nextNewsletterId++, email, created_at: new Date() });
+  }
+  async getNewsletterSubscribers() { return [...this.newsletter].reverse(); }
+  async deleteNewsletterSubscriber(id) { this.newsletter = this.newsletter.filter(s => s.id !== id); }
 }
 
 /* ── PostgreSQL helpers ───────────────────────────────────────────────────── */
@@ -162,6 +174,9 @@ const pgInit = async (client) => {
   await client.query(`CREATE TABLE IF NOT EXISTS contact_messages (
     id SERIAL PRIMARY KEY, name VARCHAR(200) NOT NULL, email VARCHAR(255) NOT NULL,
     subject VARCHAR(300), message TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  )`);
+  await client.query(`CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id SERIAL PRIMARY KEY, email VARCHAR(255) UNIQUE NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`);
   const { rows } = await client.query('SELECT COUNT(*) FROM events');
   if (parseInt(rows[0].count) === 0) {
@@ -291,6 +306,21 @@ const db = {
        GROUP BY country ORDER BY count DESC`
     );
     return rows;
+  },
+
+  // Newsletter
+  async addNewsletterSubscriber(email) {
+    if (memStore) return memStore.addNewsletterSubscriber(email);
+    await pool.query('INSERT INTO newsletter_subscribers (email) VALUES ($1)', [email]);
+  },
+  async getNewsletterSubscribers() {
+    if (memStore) return memStore.getNewsletterSubscribers();
+    const { rows } = await pool.query('SELECT * FROM newsletter_subscribers ORDER BY created_at DESC');
+    return rows;
+  },
+  async deleteNewsletterSubscriber(id) {
+    if (memStore) return memStore.deleteNewsletterSubscriber(id);
+    await pool.query('DELETE FROM newsletter_subscribers WHERE id=$1', [id]);
   },
 
   // Settings (file-based, same for both modes)

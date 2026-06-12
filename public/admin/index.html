@@ -391,6 +391,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         Messages
       </div>
+      <div class="nav-item" data-page="newsletter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+      </div>
       <div class="sidebar-divider">Analytics</div>
       <div class="nav-item" data-page="members">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-6"/></svg>
@@ -513,6 +517,17 @@
           <table>
             <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Date</th><th></th></tr></thead>
             <tbody id="msgTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Newsletter ── -->
+      <div class="page" id="page-newsletter">
+        <div class="section-hdr"><h2>Newsletter Subscribers</h2><span id="newsletterCount" style="font-size:.82rem;color:var(--gray-500)"></span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Email</th><th>Date</th><th></th></tr></thead>
+            <tbody id="newsletterTable"><tr class="empty-row"><td colspan="3">Loading…</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -690,7 +705,7 @@ $('logoutBtn').addEventListener('click', async () => {
 });
 
 // ── Navigation ────────────────────────────────────────────────────────────
-const pageTitles = { dashboard:'Dashboard', events:'Events', registrations:'Registrations', messages:'Messages', images:'Images', members:'Members', settings:'Settings' };
+const pageTitles = { dashboard:'Dashboard', events:'Events', registrations:'Registrations', messages:'Messages', newsletter:'Newsletter', images:'Images', members:'Members', settings:'Settings' };
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -702,6 +717,7 @@ function showPage(name) {
   if (name === 'events') loadEvents();
   if (name === 'registrations') { loadRegistrations(); clearRegBadge(); }
   if (name === 'messages') loadMessages();
+  if (name === 'newsletter') loadNewsletter();
   if (name === 'images') loadImages();
   if (name === 'members') loadMembers();
   if (name === 'settings') loadSettings();
@@ -956,6 +972,25 @@ $('deleteMsgBtn').addEventListener('click', async () => {
   if (res.success) { $('msgModal').classList.remove('open'); loadMessages(); toast('Message deleted'); }
   else toast('Failed to delete', 'error');
 });
+
+// ── Newsletter ─────────────────────────────────────────────────────────────
+async function loadNewsletter() {
+  const res = await api('/newsletter');
+  if (!res.success) return;
+  $('newsletterCount').textContent = res.subscribers.length + ' subscriber' + (res.subscribers.length !== 1 ? 's' : '');
+  $('newsletterTable').innerHTML = res.subscribers.length ? res.subscribers.map(s => `
+    <tr>
+      <td>${esc(s.email)}</td>
+      <td>${fmtDate(s.created_at)}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteSubscriber(${s.id})">Remove</button></td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="3">No subscribers yet</td></tr>';
+}
+async function deleteSubscriber(id) {
+  if (!confirm('Remove this subscriber?')) return;
+  const res = await api('/newsletter/' + id, { method: 'DELETE' });
+  if (res.success) { loadNewsletter(); toast('Subscriber removed'); }
+  else toast('Failed to remove', 'error');
+}
 
 // ── Utilities ─────────────────────────────────────────────────────────────
 function fmtDate(d) {

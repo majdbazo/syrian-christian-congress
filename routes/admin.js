@@ -148,6 +148,25 @@ router.delete('/messages/:id', async (req, res) => {
   }
 });
 
+// ── Newsletter subscribers ─────────────────────────────────────────────────
+router.get('/newsletter', async (req, res) => {
+  try {
+    const subscribers = await db.getNewsletterSubscribers();
+    res.json({ success: true, subscribers });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.delete('/newsletter/:id', async (req, res) => {
+  try {
+    await db.deleteNewsletterSubscriber(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // ── Settings ───────────────────────────────────────────────────────────────
 router.get('/settings', async (req, res) => {
   try {

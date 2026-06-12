@@ -68,6 +68,22 @@ router.post('/contact', async (req, res) => {
   }
 });
 
+// POST /api/newsletter
+router.post('/newsletter', async (req, res) => {
+  const { email } = req.body;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return res.status(400).json({ success: false, error: 'Invalid email address' });
+  try {
+    await db.addNewsletterSubscriber(safe(email).toLowerCase());
+    res.json({ success: true });
+  } catch (err) {
+    if (err.code === '23505')
+      return res.status(409).json({ success: false, error: 'Already subscribed' });
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Subscription failed' });
+  }
+});
+
 // GET /api/settings  — public (returns only social links)
 router.get('/settings', async (req, res) => {
   try {
