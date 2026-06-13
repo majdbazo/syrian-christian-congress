@@ -232,6 +232,31 @@ const translations = {
       hero_title: 'Founders',
       hero_intro: 'The individuals who came together to establish the Syrian Christian Congress, united by a shared commitment to building a dignified and organized Syrian Christian civic presence.',
       intro: "The founding members of the Syrian Christian Congress represent a broad cross-section of Syria's Christian communities, drawn from different traditions, regions, and walks of life. What unites them is a common conviction: that Syrian Christians must have an organized, transparent, and responsible voice in the shaping of Syria's future. Their decision to come together marks the beginning of a new chapter in Syrian Christian civic life.",
+
+      name_1: 'Eiad Herera',
+      role_1: 'Founding Member',
+      bio_1: 'Eiad Herera is a writer and political analyst. He holds a Bachelor\'s degree in Political Science from Concordia University in Montreal, Canada, with a minor in Cultures and Religions and a focus on the Middle East. He also studied media at Damascus University. Herera writes for Arabic-language and international media outlets, with a particular focus on Syrian affairs and broader Middle Eastern issues. He has worked in media and produced political and interview-based content in both Arabic and English, and has been active in Eastern Christian affairs, with a special interest in questions of minorities, pluralism, and identity.',
+
+      name_2: 'Ahed Alhendi',
+      role_2: 'Founding Member',
+      bio_2: 'Ahed Alhendi is a former prisoner of conscience who was detained in 2007 for his opposition activism against the Syrian regime. He has founded and co-founded several opposition initiatives and was elected to the Executive Committee of the Antalya Conference, one of the earliest Syrian opposition political gatherings established after the outbreak of the Syrian revolution. Alhendi has written for Al-Hayat and several Arabic-language newspapers, and his work has appeared in The Wall Street Journal, Foreign Policy, and Foreign Affairs. He currently resides in Washington, D.C., and is a graduate of the University of Maryland, where he studied Political Science.',
+
+      name_3: 'Sally Obeid',
+      role_3: 'Founding Member',
+      bio_3: 'Sally Obeid is a Fellow for MENA Policy at the IDI Center, a technology entrepreneur, and a policy researcher working at the intersection of governance, public policy, and emerging technologies. Her research and publications focus on Middle Eastern politics, transitional justice, economic reconstruction, state-building, and digital governance, with particular emphasis on how artificial intelligence, blockchain, automation, and innovation can strengthen transparent, accountable, and resilient institutions. Her perspective is further informed by her participation in Syria\'s 2011 revolution, where she contributed to digital media initiatives and civic documentation efforts during the early stages of the uprising.',
+
+      name_4: 'Fr. Maroun Mikhael Touma',
+      role_4: 'Founding Member',
+      bio_4: 'Fr. Maroun Mikhael Touma is a Syrian priest and ecclesiastical judge specializing in theology and canon law. He holds a Licentiate in Theology and a Licentiate in Canon Law from La Sagesse University in Beirut, with equivalency recognized by the Pontifical Lateran University in Rome. His specialization focuses on marriage and family cases, and he served as an ecclesiastical judge in the Catholic courts of Syria and Lebanon. He has contributed to pastoral and spiritual education and formation, and has participated in numerous seminars and lectures on philosophical, religious, legal, and family-related issues. His work has also been closely associated with serving vulnerable groups, persons with disabilities, and humanitarian and pastoral initiatives in Syria and Lebanon.',
+
+      name_5: 'Hisham Shamieh',
+      role_5: 'Founding Member',
+      bio_5: 'Hisham Shamieh is a Syrian writer and translator. He studied translation at Damascus University and specializes in translating books and studies on the history of the Arab region, pre-Islamic Arabian religions, comparative religion, political thought, and the social sciences. He also manages publishing and rights affairs for several Arab and international publishing houses. He has contributed to the publication of more than 400 books in Arabic and has taken part in founding and managing cultural initiatives aimed at promoting a culture of reading and dialogue and providing free access to books for university students in Syria.',
+
+      cta_title: 'Join the Movement',
+      cta_body: 'The founders opened this door. It is now open to all Syrian Christians who share the vision of an organized, transparent, and representative civic presence.',
+      cta_register: 'Register with the Congress',
+      cta_contact: 'Get in Touch',
     },
 
     members: {
@@ -480,6 +505,31 @@ const translations = {
       hero_title: 'الأعضاء المؤسسون',
       hero_intro: 'الأفراد الذين اجتمعوا لتأسيس الكونغرس المسيحي السوري، متحدين بالتزام مشترك ببناء حضور مدني مسيحي سوري كريم ومنظّم.',
       intro: 'يمثّل الأعضاء المؤسسون للكونغرس المسيحي السوري طيفاً واسعاً من المجتمعات المسيحية السورية، ينتمون إلى تقاليد ومناطق ومسارات حياة متعددة. ما يجمعهم قناعة مشتركة: أن المسيحيين السوريين يجب أن يمتلكوا صوتاً منظّماً وشفافاً ومسؤولاً في صياغة مستقبل سوريا. قرارهم بالاجتماع يمثّل بداية فصل جديد في الحياة المدنية المسيحية السورية.',
+
+      name_1: 'إياد هريرا',
+      role_1: 'عضو مؤسس',
+      bio_1: 'إياد هريرا كاتب ومحلل سياسي، حاصل على بكالوريوس في العلوم السياسية من جامعة كونكورديا في مونتريال، كندا، مع تخصّص فرعي في الثقافات والأديان وتركيز خاص على الشرق الأوسط. كما درس الإعلام في جامعة دمشق، ويكتب في صحف عربية وأجنبية، وتركز اهتماماته على الشأن السوري وقضايا الشرق الأوسط. شارك في العمل الإعلامي وإنتاج المحتوى السياسي والحواري باللغتين العربية والإنجليزية، ونشط في الشأن المسيحي المشرقي، مع اهتمام خاص بقضايا الأقليات والتعددية والهوية.',
+
+      name_2: 'عهد الهندي',
+      role_2: 'عضو مؤسس',
+      bio_2: 'عهد الهندي معتقل رأي سابق، اعتُقل عام 2007 على خلفية نشاطه المعارض للنظام السوري. وهو مؤسس ومشارك في عدد من المبادرات المعارضة، وانتُخب عضوًا في اللجنة التنفيذية لمؤتمر أنطاليا، الذي شكّل أحد أوائل التكتلات السياسية المعارضة بعد اندلاع الثورة السورية. كتب الهندي في جريدة الحياة وعدد من الصحف العربية، ونُشرت له مقالات في وول ستريت جورنال وفورين بوليسي وفورين أفيرز. يقيم حاليًا في واشنطن، وهو خريج جامعة ماريلاند في تخصص العلوم السياسية.',
+
+      name_3: 'سالي عبيد',
+      role_3: 'عضو مؤسس',
+      bio_3: 'سالي عبيد زميلة سياسات الشرق الأوسط وشمال أفريقيا في مركز IDI، ورائدة أعمال في مجال التكنولوجيا، وباحثة في السياسات العامة تعمل عند تقاطع الحوكمة والسياسات العامة والتقنيات الناشئة. تركز أبحاثها ومنشوراتها على قضايا الشرق الأوسط، والعدالة الانتقالية، وإعادة الإعمار الاقتصادي، وبناء الدولة، والحوكمة الرقمية، مع اهتمام خاص بكيفية توظيف الذكاء الاصطناعي والبلوك تشين والأتمتة والابتكار لتعزيز مؤسسات أكثر شفافية ومساءلة وقدرة على الصمود. كما تستند رؤيتها إلى تجربتها في المشاركة في الثورة السورية عام 2011، حيث ساهمت في مبادرات الإعلام الرقمي وجهود التوثيق المدني خلال المراحل الأولى من الحراك.',
+
+      name_4: 'الأب القاضي مارون ميخائيل توما',
+      role_4: 'عضو مؤسس',
+      bio_4: 'الأب القاضي مارون ميخائيل توما كاهن سوري متخصص في اللاهوت والقانون الكنسي. حاصل على ليسانس في اللاهوت وليسانس في القانون الكنسي من جامعة الحكمة في بيروت، معادلة في جامعة اللاتران الحبرية في روما، وتخصص في قضايا الزواج والعائلة، وعمل قاضيًا في المحاكم الكنسية الكاثوليكية في سوريا ولبنان. شارك في التعليم والتأهيل الرعوي والروحي، وأسهم في عدد من الندوات والمحاضرات المتخصصة في الفكر الفلسفي والديني والقانوني وشؤون الأسرة، كما ارتبط نشاطه بخدمة الفئات الهشة وذوي الاحتياجات الخاصة والعمل الإنساني والرعوي في سوريا ولبنان.',
+
+      name_5: 'هشام شامية',
+      role_5: 'عضو مؤسس',
+      bio_5: 'هشام شامية كاتب ومترجم سوري، درس الترجمة في جامعة دمشق، واختص بترجمة كتب ودراسات في تاريخ المنطقة العربية وأديانها قبل الإسلام، والدين المقارن، والفكر السياسي، والعلوم الاجتماعية. كما يتولى إدارة النشر والحقوق في عدد من دور النشر العربية والأجنبية. أسهم في إصدار أكثر من 400 كتاب باللغة العربية، وشارك في تأسيس وإدارة مبادرات ومشاريع ثقافية هدفت إلى تعزيز ثقافة القراءة والحوار، وإتاحة الكتب مجانًا لطلاب الجامعات في سوريا.',
+
+      cta_title: 'انضم إلى الحركة',
+      cta_body: 'فتح المؤسسون هذا الباب. والآن هو مفتوح لجميع المسيحيين السوريين الذين يشاركون رؤية حضور مدني منظّم وشفاف وتمثيلي.',
+      cta_register: 'سجّل في المؤتمر',
+      cta_contact: 'تواصل معنا',
     },
 
     members: {
