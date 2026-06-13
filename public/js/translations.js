@@ -12,7 +12,7 @@ const translations = {
 
     hero: {
       title: 'Syrian Christian Congress',
-      tagline: 'Dedicated to organizing Syrian Christian presence, strengthening national participation, and advancing equal citizenship and the rule of law in a united, secure Syria for all its people.',
+      tagline: 'An institutional civic platform dedicated to organizing Syrian Christian presence, strengthening national participation, and advancing equal citizenship and the rule of law in a united, secure Syria for all its people.',
       btn_register: 'Register Now',
       btn_learn: 'Learn More',
     },
