@@ -67,6 +67,9 @@ async function loadNews() {
           </div>
         </article>`;
     }).join('');
+    requestAnimationFrame(() => {
+      grid.querySelectorAll('.animate-in').forEach(el => el.classList.add('visible'));
+    });
   } catch {
     grid.innerHTML = '<p class="news-empty">Failed to load articles.</p>';
   }
