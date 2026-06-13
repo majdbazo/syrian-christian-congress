@@ -20,13 +20,13 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com', 'https://abs.twimg.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://abs.twimg.com'],
       scriptSrcAttr: ["'unsafe-inline'"],
       frameSrc: ["'self'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
       imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
-      connectSrc: ["'self'", 'https://api.twitter.com', 'https://platform.twitter.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
+      connectSrc: ["'self'", 'https://api.twitter.com', 'https://platform.twitter.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com', 'https://abs.twimg.com'],
     },
   },
 }));
