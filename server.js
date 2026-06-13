@@ -24,9 +24,9 @@ app.use(helmet({
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com'],
       scriptSrcAttr: ["'unsafe-inline'"],
-      frameSrc: ["'self'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://syndication.twitter.com'],
+      frameSrc: ["'self'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
       imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
-      connectSrc: ["'self'", 'https://api.twitter.com', 'https://platform.twitter.com', 'https://syndication.twitter.com'],
+      connectSrc: ["'self'", 'https://api.twitter.com', 'https://platform.twitter.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
     },
   },
 }));
