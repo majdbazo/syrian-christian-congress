@@ -190,6 +190,10 @@
   border-radius: var(--radius) 0 0 var(--radius);
 }
 .article-body-en a, .article-body-ar a { color: var(--primary); }
+.article-body-en img, .article-body-ar img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  margin: 1.5rem auto; display: block;
+}
 .article-footer-nav { max-width: 720px; margin: 3rem auto 0; }
 
 /* ── Spinner for news grid ─────────────────────────────────────────────────── */

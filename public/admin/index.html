@@ -1193,21 +1193,50 @@ $('confirmOkBtn').addEventListener('click', () => {
 let quillEn = null, quillAr = null;
 let articleImageAction = 'keep';
 
+async function insertQuillImage(quill) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/jpeg,image/png,image/gif,image/webp';
+  input.click();
+  input.onchange = async () => {
+    const file = input.files[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('image', file);
+    try {
+      const r = await fetch('/api/admin/news/upload-image', { method: 'POST', body: fd, credentials: 'include' });
+      const res = await r.json();
+      if (res.success) {
+        const range = quill.getSelection(true);
+        const idx = range ? range.index : quill.getLength();
+        quill.insertEmbed(idx, 'image', res.url);
+        quill.setSelection(idx + 1);
+      } else {
+        toast('Image upload failed: ' + (res.error || ''), 'error');
+      }
+    } catch (e) {
+      toast('Upload error: ' + e.message, 'error');
+    }
+  };
+}
+
 function initQuill() {
   if (quillEn) return;
   const toolbar = [
     ['bold', 'italic', 'underline'],
     [{ header: [2, 3, false] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link', 'blockquote'],
+    ['link', 'blockquote', 'image'],
     ['clean'],
   ];
   quillEn = new Quill('#quill-en', {
-    theme: 'snow', modules: { toolbar },
+    theme: 'snow',
+    modules: { toolbar: { container: toolbar, handlers: { image: function () { insertQuillImage(this.quill); } } } },
     placeholder: 'Write your article in English…',
   });
   quillAr = new Quill('#quill-ar', {
-    theme: 'snow', modules: { toolbar },
+    theme: 'snow',
+    modules: { toolbar: { container: toolbar, handlers: { image: function () { insertQuillImage(this.quill); } } } },
     placeholder: 'اكتب مقالتك بالعربية…',
   });
   quillAr.format('direction', 'rtl');

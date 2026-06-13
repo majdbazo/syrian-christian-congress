@@ -282,6 +282,24 @@ router.get('/news', async (req, res) => {
   }
 });
 
+router.post('/news/upload-image', newsUpload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No image provided' });
+    let url;
+    if (cloudinary) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      url = result.secure_url;
+    } else {
+      const filename = Date.now() + '_' + req.file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
+      fs.writeFileSync(path.join(NEWS_IMAGES_DIR, filename), req.file.buffer);
+      url = '/images/news/' + filename;
+    }
+    res.json({ success: true, url });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 router.post('/news', newsUpload.single('image'), async (req, res) => {
   try {
     const { title_en, title_ar, body_en, body_ar, status } = req.body;
