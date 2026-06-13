@@ -102,6 +102,7 @@
 .founder-bio {
   font-size: .9rem; line-height: 1.75;
   color: #444;
+  text-align: start;
 }
 
 /* ── Initials avatar (no photo) ─────────────────────────────────────────── */
