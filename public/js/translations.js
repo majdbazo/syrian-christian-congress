@@ -8,6 +8,7 @@ const translations = {
       home: 'Home', about: 'About', events: 'Events',
       communities: 'Communities', founders: 'Founders',
       members: 'Members', register: 'Register', contact: 'Contact',
+      news: 'News',
     },
 
     hero: {
@@ -259,6 +260,14 @@ const translations = {
       cta_contact: 'Get in Touch',
     },
 
+    news: {
+      page_title: 'News',
+      subtitle: 'Latest news and updates from the Syrian Christian Congress.',
+      empty: 'No articles have been published yet. Check back soon.',
+      read_more: 'Read more →',
+      back: '← Back to News',
+    },
+
     members: {
       page_title: 'Our Members',
       page_sub: 'A look at the global reach of the Syrian Christian Congress, members from Syria and the diaspora.',
@@ -281,6 +290,7 @@ const translations = {
       home: 'الرئيسية', about: 'عن الكونغرس', events: 'الفعاليات',
       communities: 'المجتمعات', founders: 'الأعضاء المؤسسون',
       members: 'أعضاؤنا', register: 'التسجيل', contact: 'تواصل معنا',
+      news: 'الأخبار',
     },
 
     hero: {
@@ -542,6 +552,14 @@ const translations = {
       cta_title: 'انضم إلى المؤتمر',
       cta_body: 'سجّل اليوم لتكون جزءاً من الكونغرس المسيحي السوري وأضف صوتك إلى هذه الحركة المدنية المتنامية.',
       cta_btn: 'سجّل الآن',
+    },
+
+    news: {
+      page_title: 'الأخبار',
+      subtitle: 'آخر الأخبار والتحديثات من الكونغرس المسيحي السوري.',
+      empty: 'لم يتم نشر أي مقالات بعد. تابعنا قريباً.',
+      read_more: 'قراءة المزيد →',
+      back: '→ العودة إلى الأخبار',
     },
   },
 

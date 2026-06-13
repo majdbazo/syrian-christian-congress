@@ -144,4 +144,28 @@ router.get('/calendar.ics', async (req, res) => {
   }
 });
 
+// GET /api/news — published articles
+router.get('/news', async (req, res) => {
+  try {
+    const articles = await db.getNewsArticles(true);
+    res.json({ success: true, articles });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Failed to fetch articles' });
+  }
+});
+
+// GET /api/news/:slug — single published article
+router.get('/news/:slug', async (req, res) => {
+  try {
+    const article = await db.getNewsArticleBySlug(req.params.slug);
+    if (!article || article.status !== 'published')
+      return res.status(404).json({ success: false, error: 'Article not found' });
+    res.json({ success: true, article });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Failed to fetch article' });
+  }
+});
+
 module.exports = router;

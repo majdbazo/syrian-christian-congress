@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <%- include('../partials/head', {
+    title: (article.title_en || 'News') + ' | Syrian Christian Congress',
+    description: article.title_en || 'Syrian Christian Congress news article.',
+    extraCss: ['/css/news.css']
+  }) %>
+</head>
+<body>
+
+<%- include('../partials/nav', { activePage: 'news', scrolled: true }) %>
+
+<!-- Article Hero -->
+<section class="article-hero">
+  <div class="article-hero-bg">
+    <% if (article.image_url) { %>
+    <img src="<%- article.image_url %>" alt="<%- article.title_en %>" class="article-hero-img">
+    <div class="article-hero-overlay"></div>
+    <% } else { %>
+    <div class="article-hero-plain" style="position:absolute;inset:0"></div>
+    <% } %>
+  </div>
+  <div class="container article-hero-content">
+    <a href="/news.html" class="article-back" data-i18n="news.back">← Back to News</a>
+    <span class="article-pub-date"><%= new Date(article.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+    <h1 class="article-hero-title" data-content-lang="en"><%- article.title_en %></h1>
+    <% if (article.title_ar) { %>
+    <h1 class="article-hero-title" data-content-lang="ar" style="display:none"><%- article.title_ar %></h1>
+    <% } %>
+  </div>
+</section>
+
+<!-- Article Body -->
+<section class="article-body-section">
+  <div class="container">
+    <div class="article-content">
+      <% if (article.body_en) { %>
+      <div class="article-body-en" data-content-lang="en"><%- article.body_en %></div>
+      <% } %>
+      <% if (article.body_ar) { %>
+      <div class="article-body-ar" data-content-lang="ar" dir="rtl" style="display:none"><%- article.body_ar %></div>
+      <% } %>
+    </div>
+    <div class="article-footer-nav">
+      <a href="/news.html" class="btn btn-outline" data-i18n="news.back">← Back to News</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/translations.js?v=2"></script>
+<script src="/js/main.js"></script>
+<script>
+(function () {
+  function syncContentLang(lang) {
+    document.querySelectorAll('[data-content-lang]').forEach(function (el) {
+      el.style.display = el.dataset.contentLang === lang ? '' : 'none';
+    });
+  }
+  var initLang = (function () { try { return localStorage.getItem('scc-lang') || 'en'; } catch (_) { return 'en'; } })();
+  syncContentLang(initLang);
+  document.querySelectorAll('.lang-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setTimeout(function () { syncContentLang(btn.dataset.lang); }, 10);
+    });
+  });
+})();
+</script>
+</body>
+</html>

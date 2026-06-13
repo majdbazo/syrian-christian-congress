@@ -20,9 +20,9 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com', 'https://abs.twimg.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://abs.twimg.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com'],
       scriptSrcAttr: ["'unsafe-inline'"],
       frameSrc: ["'self'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
       imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
@@ -81,6 +81,18 @@ app.get('/contact.html', noCache, (req, res) => res.render('pages/contact'));
 app.get('/members.html', noCache, (req, res) => res.render('pages/members'));
 app.get('/communities.html', noCache, (req, res) => res.render('pages/communities'));
 app.get('/founders.html', noCache, (req, res) => res.render('pages/founders'));
+app.get('/news.html', noCache, (req, res) => res.render('pages/news'));
+app.get('/news/:slug', noCache, async (req, res) => {
+  try {
+    const { db } = require('./src/db');
+    const article = await db.getNewsArticleBySlug(req.params.slug);
+    if (!article || article.status !== 'published') return res.redirect('/news.html');
+    res.render('pages/article', { article });
+  } catch (err) {
+    console.error(err);
+    res.redirect('/news.html');
+  }
+});
 
 initDatabase()
   .then(() => {

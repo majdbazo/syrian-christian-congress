@@ -86,10 +86,12 @@ class MemStore {
     this.registrations = [];
     this.contacts = [];
     this.newsletter = [];
+    this.news_articles = [];
     this._nextEventId = 6;
     this._nextRegId = 1;
     this._nextContactId = 1;
     this._nextNewsletterId = 1;
+    this._nextArticleId = 1;
   }
 
   // Events
@@ -154,6 +156,36 @@ class MemStore {
   }
   async getNewsletterSubscribers() { return [...this.newsletter].reverse(); }
   async deleteNewsletterSubscriber(id) { this.newsletter = this.newsletter.filter(s => s.id !== id); }
+
+  // News articles
+  async getNewsArticles(publishedOnly = false) {
+    const articles = publishedOnly
+      ? this.news_articles.filter(a => a.status === 'published')
+      : [...this.news_articles];
+    return articles.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }
+  async getNewsArticleBySlug(slug) {
+    return this.news_articles.find(a => a.slug === slug) || null;
+  }
+  async getNewsArticleById(id) {
+    return this.news_articles.find(a => a.id === id) || null;
+  }
+  async createNewsArticle(data) {
+    const article = { id: this._nextArticleId++, ...data, created_at: new Date(), updated_at: new Date() };
+    this.news_articles.push(article);
+    return article;
+  }
+  async updateNewsArticle(id, data) {
+    const idx = this.news_articles.findIndex(a => a.id === id);
+    if (idx === -1) throw new Error('Article not found');
+    this.news_articles[idx] = { ...this.news_articles[idx], ...data, updated_at: new Date() };
+    return this.news_articles[idx];
+  }
+  async deleteNewsArticle(id) {
+    const article = this.news_articles.find(a => a.id === id);
+    this.news_articles = this.news_articles.filter(a => a.id !== id);
+    return article || null;
+  }
 }
 
 /* ── PostgreSQL helpers ───────────────────────────────────────────────────── */
@@ -180,6 +212,19 @@ const pgInit = async (client) => {
   )`);
   await client.query(`CREATE TABLE IF NOT EXISTS settings (
     key VARCHAR(100) PRIMARY KEY, value TEXT NOT NULL DEFAULT ''
+  )`);
+  await client.query(`CREATE TABLE IF NOT EXISTS news_articles (
+    id SERIAL PRIMARY KEY,
+    title_en VARCHAR(500) NOT NULL,
+    title_ar VARCHAR(500),
+    body_en TEXT,
+    body_ar TEXT,
+    image_url TEXT,
+    image_public_id VARCHAR(500),
+    slug VARCHAR(500) UNIQUE NOT NULL,
+    status VARCHAR(20) DEFAULT 'draft',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`);
   const defaults = [
     ['contact_email', 'Info@syrianchristiancongress.org'],
@@ -332,6 +377,52 @@ const db = {
   async deleteNewsletterSubscriber(id) {
     if (memStore) return memStore.deleteNewsletterSubscriber(id);
     await pool.query('DELETE FROM newsletter_subscribers WHERE id=$1', [id]);
+  },
+
+  // News articles
+  async getNewsArticles(publishedOnly = false) {
+    if (memStore) return memStore.getNewsArticles(publishedOnly);
+    const query = publishedOnly
+      ? "SELECT * FROM news_articles WHERE status='published' ORDER BY created_at DESC"
+      : 'SELECT * FROM news_articles ORDER BY created_at DESC';
+    const { rows } = await pool.query(query);
+    return rows;
+  },
+  async getNewsArticleBySlug(slug) {
+    if (memStore) return memStore.getNewsArticleBySlug(slug);
+    const { rows } = await pool.query('SELECT * FROM news_articles WHERE slug=$1', [slug]);
+    return rows[0] || null;
+  },
+  async getNewsArticleById(id) {
+    if (memStore) return memStore.getNewsArticleById(id);
+    const { rows } = await pool.query('SELECT * FROM news_articles WHERE id=$1', [id]);
+    return rows[0] || null;
+  },
+  async createNewsArticle(data) {
+    if (memStore) return memStore.createNewsArticle(data);
+    const { rows } = await pool.query(
+      `INSERT INTO news_articles (title_en,title_ar,body_en,body_ar,image_url,image_public_id,slug,status)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
+      [data.title_en,data.title_ar,data.body_en,data.body_ar,
+       data.image_url,data.image_public_id,data.slug,data.status||'draft']
+    );
+    return rows[0];
+  },
+  async updateNewsArticle(id, data) {
+    if (memStore) return memStore.updateNewsArticle(id, data);
+    const { rows } = await pool.query(
+      `UPDATE news_articles SET title_en=$1,title_ar=$2,body_en=$3,body_ar=$4,
+       image_url=$5,image_public_id=$6,slug=$7,status=$8,updated_at=NOW()
+       WHERE id=$9 RETURNING *`,
+      [data.title_en,data.title_ar,data.body_en,data.body_ar,
+       data.image_url,data.image_public_id,data.slug,data.status,id]
+    );
+    return rows[0];
+  },
+  async deleteNewsArticle(id) {
+    if (memStore) return memStore.deleteNewsArticle(id);
+    const { rows } = await pool.query('DELETE FROM news_articles WHERE id=$1 RETURNING *', [id]);
+    return rows[0] || null;
   },
 
   // Settings
