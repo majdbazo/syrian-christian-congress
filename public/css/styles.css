@@ -1001,6 +1001,13 @@ p  { font-size: clamp(.95rem, 1.5vw, 1.05rem); color: var(--text-secondary); lin
   margin-top: 1rem;
   color: rgba(255,255,255,.55);
 }
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+.footer-col .cal-card {
+  flex: 1;
+}
 .footer-col h4 {
   font-size: .8rem;
   text-transform: uppercase;
