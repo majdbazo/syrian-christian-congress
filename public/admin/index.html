@@ -6,7 +6,7 @@
   <title>Admin — Syrian Christian Congress</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
   <style>
   /* ── Reset & tokens ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -566,7 +566,7 @@
       <div class="page" id="page-news">
         <div class="section-hdr">
           <h2>News Articles</h2>
-          <button class="btn btn-primary" id="addArticleBtn">
+          <button class="btn btn-primary" id="addArticleBtn" onclick="openArticleModal(null)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             New Article
           </button>
@@ -726,7 +726,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const api = async (path, opts = {}) => {
@@ -1234,27 +1234,39 @@ $('closeArticleModal').addEventListener('click', closeArticleModal);
 $('cancelArticleModal').addEventListener('click', closeArticleModal);
 
 function openArticleModal(article) {
-  initQuill();
-  articleImageAction = 'keep';
-  $('articleModalTitle').textContent = article ? 'Edit Article' : 'New Article';
-  $('af-id').value = article ? article.id : '';
-  $('af-title-en').value = article ? (article.title_en || '') : '';
-  $('af-title-ar').value = article ? (article.title_ar || '') : '';
-  $('af-status').value = article ? (article.status || 'draft') : 'draft';
-  $('af-image-file').value = '';
-  $('af-image-name').textContent = '';
-  const preview = $('article-img-preview');
-  if (article && article.image_url) {
-    preview.src = article.image_url;
-    preview.style.display = 'block';
-    $('af-image-clear').style.display = '';
-  } else {
-    preview.style.display = 'none';
-    $('af-image-clear').style.display = 'none';
+  try {
+    articleImageAction = 'keep';
+    $('articleModalTitle').textContent = article ? 'Edit Article' : 'New Article';
+    $('af-id').value = article ? article.id : '';
+    $('af-title-en').value = article ? (article.title_en || '') : '';
+    $('af-title-ar').value = article ? (article.title_ar || '') : '';
+    $('af-status').value = article ? (article.status || 'draft') : 'draft';
+    $('af-image-file').value = '';
+    $('af-image-name').textContent = '';
+    const preview = $('article-img-preview');
+    if (article && article.image_url) {
+      preview.src = article.image_url;
+      preview.style.display = 'block';
+      $('af-image-clear').style.display = '';
+    } else {
+      preview.style.display = 'none';
+      $('af-image-clear').style.display = 'none';
+    }
+    $('articleModal').classList.add('open');
+    setTimeout(function () {
+      try {
+        initQuill();
+        if (quillEn) quillEn.root.innerHTML = article ? (article.body_en || '') : '';
+        if (quillAr) quillAr.root.innerHTML = article ? (article.body_ar || '') : '';
+      } catch (e) {
+        console.error('Quill init error:', e);
+        toast('Editor failed to load: ' + e.message, 'error');
+      }
+    }, 50);
+  } catch (e) {
+    console.error('openArticleModal error:', e);
+    toast('Could not open modal: ' + e.message, 'error');
   }
-  quillEn.root.innerHTML = article ? (article.body_en || '') : '';
-  quillAr.root.innerHTML = article ? (article.body_ar || '') : '';
-  $('articleModal').classList.add('open');
 }
 
 async function openEditArticle(id) {

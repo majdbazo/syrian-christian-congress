@@ -20,9 +20,9 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com'],
-      fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://platform.twitter.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com', 'https://cdn.jsdelivr.net'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://abs.twimg.com', 'https://cdn.quilljs.com', 'https://cdn.jsdelivr.net'],
       scriptSrcAttr: ["'unsafe-inline'"],
       frameSrc: ["'self'", 'https://platform.twitter.com', 'https://platform.x.com', 'https://syndication.twitter.com', 'https://twitter.com', 'https://x.com'],
       imgSrc: ["'self'", 'data:', 'https:', 'blob:'],
@@ -65,6 +65,7 @@ app.use('/api/register', formLimiter);
 app.use('/api/contact', formLimiter);
 app.use('/api/admin/login', loginLimiter);
 
+app.use('/admin', (req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
