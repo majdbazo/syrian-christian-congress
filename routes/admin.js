@@ -9,16 +9,21 @@ const IMAGES_DIR = path.join(__dirname, '../public/images');
 const NEWS_IMAGES_DIR = path.join(__dirname, '../public/images/news');
 if (!fs.existsSync(NEWS_IMAGES_DIR)) fs.mkdirSync(NEWS_IMAGES_DIR, { recursive: true });
 
-// Cloudinary (optional — only if env vars are set)
+// Cloudinary (optional — supports CLOUDINARY_URL or individual vars)
 let cloudinary = null;
 try {
-  if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+  const hasUrl = !!process.env.CLOUDINARY_URL;
+  const hasVars = process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET;
+  if (hasUrl || hasVars) {
     cloudinary = require('cloudinary').v2;
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
+    if (hasVars) {
+      cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      });
+    }
+    // CLOUDINARY_URL is picked up automatically by the SDK when set
   }
 } catch (e) { console.warn('Cloudinary unavailable:', e.message); }
 

@@ -6,47 +6,71 @@
     description: article.title_en || 'Syrian Christian Congress news article.',
     extraCss: ['/css/news.css']
   }) %>
+  <style>
+    .art-body { font-size: 1.05rem; line-height: 1.8; color: #374151; }
+    .art-body p { margin: 0 0 0.75rem; }
+    .art-body p:empty,
+    .art-body p:has(> br:only-child) { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
+    .art-body h1 { font-size: 1.7rem; font-weight: 800; color: #1b2d5b; margin: 2rem 0 .75rem; }
+    .art-body h2 { font-size: 1.3rem; font-weight: 700; color: #1b2d5b; margin: 1.75rem 0 .6rem; }
+    .art-body h3 { font-size: 1.1rem; font-weight: 600; color: #1b2d5b; margin: 1.5rem 0 .5rem; }
+    .art-body ul, .art-body ol { margin: .5rem 0 1rem 1.5rem; }
+    .art-body li { margin-bottom: .35rem; }
+    .art-body a { color: #c8a96e; text-decoration: underline; }
+    .art-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem auto; display: block; }
+    .art-body strong { font-weight: 700; }
+    .art-body blockquote { border-left: 4px solid #c8a96e; padding: .875rem 1.25rem; background: #f9fafb; border-radius: 0 6px 6px 0; margin: 1.5rem 0; font-style: italic; color: #1b2d5b; }
+    .art-back { font-size: .84rem; color: #6b7280; text-decoration: none; }
+    .art-back:hover { color: #111; }
+    .art-date { font-size: .72rem; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; }
+    .art-title { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.2; color: #1b2d5b; margin: 0 0 1.5rem; }
+    .art-divider { border: none; border-top: 2px solid #e5e7eb; margin: 0 0 2rem; }
+  </style>
 </head>
 <body>
 
 <%- include('../partials/nav', { activePage: 'news', scrolled: true }) %>
 
-<!-- Article Hero -->
-<section class="article-hero">
-  <div class="article-hero-bg">
-    <% if (article.image_url) { %>
-    <img src="<%- article.image_url %>" alt="<%- article.title_en %>" class="article-hero-img">
-    <div class="article-hero-overlay"></div>
-    <% } else { %>
-    <div class="article-hero-plain" style="position:absolute;inset:0"></div>
-    <% } %>
-  </div>
-  <div class="container article-hero-content">
-    <a href="/news.html" class="article-back" data-i18n="news.back">← Back to News</a>
-    <span class="article-pub-date"><%= new Date(article.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
-    <h1 class="article-hero-title" data-content-lang="en"><%- article.title_en %></h1>
-    <% if (article.title_ar) { %>
-    <h1 class="article-hero-title" data-content-lang="ar" style="display:none"><%- article.title_ar %></h1>
-    <% } %>
-  </div>
-</section>
+<%# ── Nav spacer — pushes everything below the fixed navbar ── %>
+<div style="height: 72px; display: block;"></div>
 
-<!-- Article Body -->
-<section class="article-body-section">
-  <div class="container">
-    <div class="article-content">
-      <% if (article.body_en) { %>
-      <div class="article-body-en" data-content-lang="en"><%- article.body_en %></div>
-      <% } %>
-      <% if (article.body_ar) { %>
-      <div class="article-body-ar" data-content-lang="ar" dir="rtl" style="display:none"><%- article.body_ar %></div>
-      <% } %>
+<%# ── Cover image ── %>
+<% if (article.image_url) { %>
+<div style="display: block; width: 100%; height: 420px; overflow: hidden; background: #111; line-height: 0;">
+  <img src="<%- article.image_url %>" alt="<%- article.title_en %>"
+       style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;">
+</div>
+<% } %>
+
+<%# ── Article content ── %>
+<div style="background: #ffffff; padding: 2.5rem 0 5rem; display: block;">
+  <div style="max-width: 720px; margin: 0 auto; padding: 0 clamp(1rem, 3vw, 2rem);">
+
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+      <a href="/news.html" class="art-back" data-i18n="news.back">← Back to News</a>
+      <span class="art-date"><%= new Date(article.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
     </div>
-    <div class="article-footer-nav">
+
+    <h1 class="art-title" data-content-lang="en"><%- article.title_en %></h1>
+    <% if (article.title_ar) { %>
+    <h1 class="art-title" data-content-lang="ar" style="display:none"><%- article.title_ar %></h1>
+    <% } %>
+
+    <hr class="art-divider">
+
+    <% if (article.body_en) { %>
+    <div class="art-body" data-content-lang="en"><%- article.body_en %></div>
+    <% } %>
+    <% if (article.body_ar) { %>
+    <div class="art-body" data-content-lang="ar" dir="rtl" style="display:none"><%- article.body_ar %></div>
+    <% } %>
+
+    <div style="margin-top: 3rem;">
       <a href="/news.html" class="btn btn-outline" data-i18n="news.back">← Back to News</a>
     </div>
+
   </div>
-</section>
+</div>
 
 <%- include('../partials/footer') %>
 
@@ -54,6 +78,14 @@
 <script src="/js/main.js"></script>
 <script>
 (function () {
+  // Fix Quill empty paragraphs (catches all variants)
+  document.querySelectorAll('.art-body p').forEach(function (p) {
+    var h = p.innerHTML.trim();
+    if (h === '' || /^(<br\s*\/?>|&nbsp;|\s)+$/i.test(h)) {
+      p.style.cssText = 'display:none!important;height:0!important;margin:0!important;padding:0!important';
+    }
+  });
+
   function syncContentLang(lang) {
     document.querySelectorAll('[data-content-lang]').forEach(function (el) {
       el.style.display = el.dataset.contentLang === lang ? '' : 'none';
