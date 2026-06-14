@@ -40,33 +40,49 @@ function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+function renderCard(a, lang) {
+  const readMore = (translations[lang] || translations.en).news.read_more;
+  const isWP = a.source === 'wordpress';
+  const title   = isWP ? a.title_en : (lang === 'ar' && a.title_ar ? a.title_ar : a.title_en);
+  const excerpt = isWP ? (a.excerpt || '').slice(0, 160) : stripHtml(lang === 'ar' && a.body_ar ? a.body_ar : a.body_en).slice(0, 160);
+  const date    = new Date(isWP ? a.date : a.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const href    = isWP ? escHtml(a.link) : `/news/${a.slug}`;
+  const target  = isWP ? ' target="_blank" rel="noopener"' : '';
+  return `
+    <article class="news-card animate-in">
+      ${a.image_url ? `<div class="news-card-img"><img src="${escHtml(a.image_url)}" alt="${escHtml(title)}" loading="lazy"></div>` : ''}
+      <div class="news-card-body">
+        <span class="news-date">${date}</span>
+        <h2 class="news-card-title">${escHtml(title)}</h2>
+        ${excerpt ? `<p class="news-card-excerpt">${escHtml(excerpt)}…</p>` : ''}
+        <a href="${href}"${target} class="btn-news-read">${escHtml(readMore)}</a>
+      </div>
+    </article>`;
+}
+
 async function loadNews() {
   const grid = document.getElementById('newsGrid');
   try {
-    const res = await fetch('/api/news').then(r => r.json());
-    if (!res.success || !res.articles.length) {
+    const [localRes, wpRes] = await Promise.allSettled([
+      fetch('/api/news').then(r => r.json()),
+      fetch('/api/wp-news').then(r => r.json()),
+    ]);
+
+    const local = localRes.status === 'fulfilled' && localRes.value.success ? localRes.value.articles : [];
+    const wp    = wpRes.status === 'fulfilled'    && wpRes.value.success    ? wpRes.value.articles    : [];
+
+    const all = [...local, ...wp].sort((a, b) =>
+      new Date(b.created_at || b.date) - new Date(a.created_at || a.date)
+    );
+
+    if (!all.length) {
       const msg = (translations[currentLang] || translations.en).news.empty;
       grid.innerHTML = `<p class="news-empty">${escHtml(msg)}</p>`;
       return;
     }
+
     const lang = currentLang || 'en';
-    grid.innerHTML = res.articles.map(a => {
-      const title = lang === 'ar' && a.title_ar ? a.title_ar : a.title_en;
-      const body  = lang === 'ar' && a.body_ar   ? a.body_ar   : a.body_en;
-      const date  = new Date(a.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      const excerpt = stripHtml(body).slice(0, 160);
-      const readMore = (translations[lang] || translations.en).news.read_more;
-      return `
-        <article class="news-card animate-in">
-          ${a.image_url ? `<div class="news-card-img"><img src="${escHtml(a.image_url)}" alt="${escHtml(title)}" loading="lazy"></div>` : ''}
-          <div class="news-card-body">
-            <span class="news-date">${date}</span>
-            <h2 class="news-card-title">${escHtml(title)}</h2>
-            ${excerpt ? `<p class="news-card-excerpt">${escHtml(excerpt)}…</p>` : ''}
-            <a href="/news/${a.slug}" class="btn-news-read">${escHtml(readMore)}</a>
-          </div>
-        </article>`;
-    }).join('');
+    grid.innerHTML = all.map(a => renderCard(a, lang)).join('');
     requestAnimationFrame(() => {
       grid.querySelectorAll('.animate-in').forEach(el => el.classList.add('visible'));
     });

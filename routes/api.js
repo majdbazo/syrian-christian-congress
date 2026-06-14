@@ -144,6 +144,38 @@ router.get('/calendar.ics', async (req, res) => {
   }
 });
 
+// GET /api/wp-news — proxy WordPress posts with 5-min cache
+let _wpCache = null;
+let _wpCacheTs = 0;
+const WP_TTL = 5 * 60 * 1000;
+const WP_API = 'https://syrianchristiancongress.org/wp-json/wp/v2/posts?per_page=20&_embed&orderby=date&order=desc';
+
+router.get('/wp-news', async (req, res) => {
+  try {
+    if (_wpCache && Date.now() - _wpCacheTs < WP_TTL) {
+      return res.json({ success: true, articles: _wpCache });
+    }
+    const r = await fetch(WP_API);
+    if (!r.ok) throw new Error(`WordPress API returned ${r.status}`);
+    const posts = await r.json();
+    const articles = posts.map(p => ({
+      id: `wp-${p.id}`,
+      title_en: p.title?.rendered || '',
+      excerpt: (p.excerpt?.rendered || '').replace(/<[^>]+>/g, '').trim(),
+      date: p.date,
+      link: p.link,
+      image_url: p._embedded?.['wp:featuredmedia']?.[0]?.source_url || null,
+      source: 'wordpress',
+    }));
+    _wpCache = articles;
+    _wpCacheTs = Date.now();
+    res.json({ success: true, articles });
+  } catch (err) {
+    console.error('WP fetch error:', err.message);
+    res.status(502).json({ success: false, error: 'Could not fetch WordPress articles' });
+  }
+});
+
 // GET /api/news — published articles
 router.get('/news', async (req, res) => {
   try {
