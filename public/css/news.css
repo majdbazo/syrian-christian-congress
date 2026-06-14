@@ -13,7 +13,7 @@
 }
 .news-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(17,29,58,.92), rgba(27,45,91,.80));
+  background: linear-gradient(to top, rgba(10,20,50,.82) 0%, rgba(10,20,50,.45) 55%, rgba(10,20,50,.2) 100%);
 }
 .news-hero-content {
   position: relative; z-index: 1;
@@ -24,11 +24,13 @@
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   margin-bottom: .75rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
 }
 .news-hero-content p {
   font-size: 1.05rem;
-  color: rgba(255,255,255,.8);
+  color: rgba(255,255,255,.9);
   max-width: 560px;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
 
 /* ── News Grid ─────────────────────────────────────────────────────────────── */
